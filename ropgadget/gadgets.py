@@ -7,8 +7,12 @@
 ##
 
 import re
-from   capstone import *
 
+from capstone import (
+    Cs,
+    CS_ARCH_X86, CS_ARCH_MIPS, CS_ARCH_PPC, CS_ARCH_SPARC, CS_ARCH_ARM, CS_ARCH_ARM64,
+    CS_MODE_BIG_ENDIAN, CS_MODE_ARM
+)
 
 class Gadgets(object):
     def __init__(self, binary, options, offset):
@@ -242,4 +246,3 @@ class Gadgets(object):
         else:
             print("Gadgets().passClean() - Architecture not supported")
             return None
-
