@@ -47,6 +47,7 @@ def doNM(executable):
                 previous = addr_int
                 mapping[addr_int] = (addr, sym, typ)
                 addrs.append('0x' + addr)
+    intervals.append([previous, None])  #the last one
     return (intervals, addrs, mapping)
 
 
@@ -67,7 +68,6 @@ class Functions(object):
                     self.__fns[sym] += 1
                 else:
                     self.__fns[sym] = 1
-        sys.stderr.write("INIT\n")
 
     def show(self):
             #print("vaddr = {0} : {1}\n".format(gadget["vaddr"], sym))
@@ -96,9 +96,10 @@ class Functions(object):
         function = None
         vaddr = gadget["vaddr"]
         for interval in self.__intervals:
-            if interval[0] <= vaddr and vaddr < interval[1]:
-                function = self.__map[interval[0]]
-                break
+            if interval[0] <= vaddr:
+                if interval[1] is None or vaddr < interval[1]:
+                    function = self.__map[interval[0]]
+                    break
         return function
 
 
