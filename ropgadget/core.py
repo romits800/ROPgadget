@@ -184,14 +184,20 @@ class Core(cmd.Cmd):
                 arch = self.__binary.getArchMode()
                 if arch != CS_MODE_32:
                     Functions(self, self.__gadgets, self.__options).show()
+                else:
+                    print("Not implemented on 32 bit yet.")
             elif self.__options.fns2map:
                 arch = self.__binary.getArchMode()
                 if arch != CS_MODE_32:
                     Functions(self, self.__gadgets, self.__options).map()
+                else:
+                    print("Not implemented on 32 bit yet.")
             elif self.__options.fns2list:
                 arch = self.__binary.getArchMode()
                 if arch != CS_MODE_32:
                     Functions(self, self.__gadgets, self.__options).list()
+                else:
+                    print("Not implemented on 32 bit yet.")
             return True
 
 

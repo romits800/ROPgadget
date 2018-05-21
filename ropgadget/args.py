@@ -94,8 +94,8 @@ architectures supported:
         parser.add_argument("--all",                action="store_true",              help="Disables the removal of duplicate gadgets")
         parser.add_argument("--dump",               action="store_true",              help="Outputs the gadget bytes")
         parser.add_argument("--fns",                action="store_true",              help="Lists the gadgets per function (requires nm)")
-        parser.add_argument("--fns2map",            type=str, metavar="<string>",     help="Writes the gadgets per function out as json map")
-        parser.add_argument("--fns2list",           type=str, metavar="<string>",     help="Writes the gadgets per function out as a sorted json list")
+        parser.add_argument("--fns2map",            type=str, metavar="<filename>",     help="Writes the gadgets per function out as json map")
+        parser.add_argument("--fns2list",           type=str, metavar="<filename>",     help="Writes the gadgets per function out as a sorted json list")
 
         self.__args = parser.parse_args(arguments)
 

@@ -85,11 +85,11 @@ class Functions(object):
 
     def list(self):
         path = self.__options.fns2list
-        data = sorted(self.__fns.items(), key=operator.itemgetter(1), reverse=True) 
+        data = sorted(self.__fns.items(), key=operator.itemgetter(1), reverse=True)
         with open(path, 'w') as fp:
             json.dump(data, fp)
         print("Wrote {0} entries out to {1}\n".format(len(data), path))
-        
+
 
     def getFunction(self, gadget):
         function = None
