@@ -1,6 +1,9 @@
 import collections
 import re
 import sys
+import json
+import operator
+
 from subprocess import *
 
 
@@ -25,7 +28,6 @@ def fetchLines(args):
 
 
 def doNM(executable):
-    fns = collections.OrderedDict()
     addrs = []
     intervals = []
     previous = None
@@ -45,8 +47,7 @@ def doNM(executable):
                 previous = addr_int
                 mapping[addr_int] = (addr, sym, typ)
                 addrs.append('0x' + addr)
-                fns[sym] = 0
-    return (fns, intervals, addrs, mapping)
+    return (intervals, addrs, mapping)
 
 
 
@@ -56,21 +57,39 @@ class Functions(object):
         self.__core = core
         self.__gadgets = gadgets
         self.__options = options
-        (self.__fns, self.__intervals, self.__addrs, self.__map) = doNM(self.__options.binary)
-
-
-    def show(self):
+        self.__fns = {}
+        (self.__intervals, self.__addrs, self.__map) = doNM(self.__options.binary)
         for gadget in self.__gadgets:
             quad = self.getFunction(gadget)
             if quad is not None:
                 (addr, sym, typ) = quad
-                self.__fns[sym] += 1
+                if sym in self.__fns:
+                    self.__fns[sym] += 1
+                else:
+                    self.__fns[sym] = 1
+
+    def show(self):
             #print("vaddr = {0} : {1}\n".format(gadget["vaddr"], sym))
         for key in self.__fns:
             count = self.__fns[key]
             if count > 0:
-                print("\n{0} has {1} gadgets".format(key, count))
+                print("{0} has {1} gadgets".format(key, count))
         print("\n")
+
+    def map(self):
+        path = self.__options.fns2map
+        data = self.__fns
+        with open(path, 'w') as fp:
+            json.dump(data, fp)
+        print("Wrote {0} entries out to {1}\n".format(len(data), path))
+
+    def list(self):
+        path = self.__options.fns2list
+        data = sorted(self.__fns.items(), key=operator.itemgetter(1), reverse=True) 
+        with open(path, 'w') as fp:
+            json.dump(data, fp)
+        print("Wrote {0} entries out to {1}\n".format(len(data), path))
+        
 
     def getFunction(self, gadget):
         function = None

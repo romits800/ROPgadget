@@ -180,8 +180,18 @@ class Core(cmd.Cmd):
             self.__lookingForGadgets()
             if self.__options.ropchain:
                 ROPMaker(self.__binary, self.__gadgets, self.__offset)
-            elif self.__options.functions:
-                Functions(self, self.__gadgets, self.__options).show()
+            elif self.__options.fns:
+                arch = self.__binary.getArchMode()
+                if arch != CS_MODE_32:
+                    Functions(self, self.__gadgets, self.__options).show()
+            elif self.__options.fns2map:
+                arch = self.__binary.getArchMode()
+                if arch != CS_MODE_32:
+                    Functions(self, self.__gadgets, self.__options).map()
+            elif self.__options.fns2list:
+                arch = self.__binary.getArchMode()
+                if arch != CS_MODE_32:
+                    Functions(self, self.__gadgets, self.__options).list()
             return True
 
 
@@ -193,7 +203,11 @@ class Core(cmd.Cmd):
 
     # Console methods  ============================================
 
-    def do_functions(self):
+    def do_fns(self):
+        if self.__binary == None:
+            if not silent:
+                print("[-] No binary loaded.")
+            return False
         Functions(self, self.__options).show()
         return False
 
