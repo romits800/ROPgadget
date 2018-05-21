@@ -67,6 +67,7 @@ class Functions(object):
                     self.__fns[sym] += 1
                 else:
                     self.__fns[sym] = 1
+        sys.stderr.write("INIT\n")
 
     def show(self):
             #print("vaddr = {0} : {1}\n".format(gadget["vaddr"], sym))
