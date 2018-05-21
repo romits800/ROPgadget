@@ -1,10 +1,10 @@
 ## -*- coding: utf-8 -*-
 ##
 ##  Jonathan Salwan - 2014-05-12 - ROPgadget tool
-## 
+##
 ##  http://twitter.com/JonathanSalwan
 ##  http://shell-storm.org/project/ROPgadget/
-## 
+##
 
 import argparse
 import sys
@@ -28,11 +28,11 @@ class Args(object):
     def __parse(self, arguments, custom_arguments_provided=False):
         parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
                                          description="""description:
-  ROPgadget lets you search your gadgets on a binary. It supports several 
+  ROPgadget lets you search your gadgets on a binary. It supports several
   file formats and architectures and uses the Capstone disassembler for
   the search engine.
 
-formats supported: 
+formats supported:
   - ELF
   - PE
   - Mach-O
@@ -48,7 +48,7 @@ architectures supported:
   - Sparc
 """,
                                          epilog="""examples:
-  ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 
+  ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86
   ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --ropchain
   ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --depth 3
   ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --string "main"
@@ -93,6 +93,7 @@ architectures supported:
         parser.add_argument("--multibr",            action="store_true",              help="Enable multiple branch gadgets")
         parser.add_argument("--all",                action="store_true",              help="Disables the removal of duplicate gadgets")
         parser.add_argument("--dump",               action="store_true",              help="Outputs the gadget bytes")
+        parser.add_argument("--functions",          action="store_true",              help="Lists the gadgets per function (requires nm)")
 
         self.__args = parser.parse_args(arguments)
 
@@ -131,4 +132,3 @@ architectures supported:
 
     def getArgs(self):
         return self.__args
-

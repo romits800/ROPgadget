@@ -16,6 +16,8 @@ import ropgadget.updateAlert
 import ropgadget.version
 import ropgadget.loaders
 import ropgadget.ropchain
+import ropgadget.nm
+
 
 def main():
     import sys

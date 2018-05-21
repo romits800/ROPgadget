@@ -1,14 +1,15 @@
 ## -*- coding: utf-8 -*-
 ##
 ##  Jonathan Salwan - 2014-05-17 - ROPgadget tool
-## 
+##
 ##  http://twitter.com/JonathanSalwan
 ##  http://shell-storm.org/project/ROPgadget/
-## 
+##
 
 import cmd
 import os
 import re
+
 import codecs
 import ropgadget.rgutils as rgutils
 import sqlite3
@@ -18,6 +19,7 @@ from capstone                     import CS_MODE_32
 from ropgadget.gadgets            import Gadgets
 from ropgadget.options            import Options
 from ropgadget.ropchain.ropmaker  import ROPMaker
+from ropgadget.nm                 import Functions
 
 class Core(cmd.Cmd):
     def __init__(self, options):
@@ -173,11 +175,13 @@ class Core(cmd.Cmd):
         if   self.__options.string:   return self.__lookingForAString(self.__options.string)
         elif self.__options.opcode:   return self.__lookingForOpcodes(self.__options.opcode)
         elif self.__options.memstr:   return self.__lookingForMemStr(self.__options.memstr)
-        else: 
+        else:
             self.__getAllgadgets()
             self.__lookingForGadgets()
             if self.__options.ropchain:
                 ROPMaker(self.__binary, self.__gadgets, self.__offset)
+            elif self.__options.functions:
+                Functions(self, self.__gadgets, self.__options).show()
             return True
 
 
@@ -189,8 +193,12 @@ class Core(cmd.Cmd):
 
     # Console methods  ============================================
 
+    def do_functions(self):
+        Functions(self, self.__options).show()
+        return False
+
     def do_binary(self, s, silent=False):
-        # Do not split the filename with spaces since it might contain 
+        # Do not split the filename with spaces since it might contain
         # whitespaces
         if len(s) == 0:
             if not silent:
@@ -239,7 +247,7 @@ class Core(cmd.Cmd):
         if not silent:
             print("[+] Gadgets loaded !")
 
-        
+
     def help_load(self):
         print("Syntax: load -- Load all gadgets")
         return False
@@ -302,7 +310,7 @@ class Core(cmd.Cmd):
             if a not in gadget:
                 return False
         return True
-        
+
     def __withoutK(self, listK, gadget):
         for a in listK:
             if a in gadget:
