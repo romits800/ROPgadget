@@ -181,23 +181,11 @@ class Core(cmd.Cmd):
             if self.__options.ropchain:
                 ROPMaker(self.__binary, self.__gadgets, self.__offset)
             elif self.__options.fns:
-                arch = self.__binary.getArchMode()
-                if arch != CS_MODE_32:
-                    Functions(self, self.__gadgets, self.__options).show()
-                else:
-                    print("Not implemented on 32 bit yet.")
+                Functions(self, self.__gadgets, self.__options).show()
             elif self.__options.fns2map:
-                arch = self.__binary.getArchMode()
-                if arch != CS_MODE_32:
-                    Functions(self, self.__gadgets, self.__options).map()
-                else:
-                    print("Not implemented on 32 bit yet.")
+                Functions(self, self.__gadgets, self.__options).map()
             elif self.__options.fns2list:
-                arch = self.__binary.getArchMode()
-                if arch != CS_MODE_32:
-                    Functions(self, self.__gadgets, self.__options).list()
-                else:
-                    print("Not implemented on 32 bit yet.")
+                Functions(self, self.__gadgets, self.__options).list()
             return True
 
 
