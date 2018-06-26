@@ -40,8 +40,8 @@ def doNM(executable):
             addr = m.group(1)
             typ = m.group(2)
             sym = m.group(3)
-            if addr != '0' * 16:
-                addr_int = int(addr, 16)
+            addr_int = int(addr, 16)
+            if addr_int != 0:
                 if previous is not None:
                     intervals.append([previous, addr_int])
                 previous = addr_int
