@@ -24,11 +24,12 @@ from ropgadget.nm                 import Functions
 class Core(cmd.Cmd):
     def __init__(self, options):
         cmd.Cmd.__init__(self)
-        self.__options = options
-        self.__binary  = None
-        self.__gadgets = []
-        self.__offset  = 0
-        self.prompt    = '(ROPgadget)> '
+        self.__options   = options
+        self.__binary    = None
+        self.__gadgets   = []
+        self.__offset    = 0
+        self.__functions = None
+        self.prompt      = '(ROPgadget)> '
 
 
     def __checksBeforeManipulations(self):
@@ -151,7 +152,6 @@ class Core(cmd.Cmd):
                 pass
         return True
 
-
     def analyze(self):
 
         try:
@@ -183,19 +183,19 @@ class Core(cmd.Cmd):
             elif self.__options.fns:
                 arch = self.__binary.getArchMode()
                 if arch != CS_MODE_32:
-                    Functions(self, self.__gadgets, self.__options).show()
+                    self.functions().show()
                 else:
                     print("Not implemented on 32 bit yet.")
             elif self.__options.fns2map:
                 arch = self.__binary.getArchMode()
                 if arch != CS_MODE_32:
-                    Functions(self, self.__gadgets, self.__options).map()
+                    self.functions.map()
                 else:
                     print("Not implemented on 32 bit yet.")
             elif self.__options.fns2list:
                 arch = self.__binary.getArchMode()
                 if arch != CS_MODE_32:
-                    Functions(self, self.__gadgets, self.__options).list()
+                    self.functions.list()
                 else:
                     print("Not implemented on 32 bit yet.")
             return True
@@ -205,7 +205,8 @@ class Core(cmd.Cmd):
         return self.__gadgets
 
 
-
+    def functions(self):
+        return Functions(self, self.__gadgets, self.__options)
 
     # Console methods  ============================================
 

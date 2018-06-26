@@ -7,7 +7,7 @@ import operator
 from subprocess import *
 
 
-linedata = re.compile('([0-9a-f]+)\s+(\w)\s+(\w+)', re.IGNORECASE)
+linedata = re.compile('([0-9a-f]+)\s+(\w)\s+_?(\w+)', re.IGNORECASE)
 
 
 
@@ -32,7 +32,7 @@ def doNM(executable):
     intervals = []
     previous = None
     mapping = collections.OrderedDict()
-    nmCmd  = ['nm', '-a', '-n',  executable]
+    nmCmd  = ['nm', '-C', '-a', '-n',  executable]
     lines = fetchLines(nmCmd)
     for line in lines:
         m = linedata.match(line)
@@ -102,7 +102,13 @@ class Functions(object):
                     break
         return function
 
-
+    def getMap(self, copy=True):
+        if copy:
+            retval = {}
+            retval.update(self.__fns)
+            return retval
+        else:
+            return self.__fns
 
 
 def main(args):
