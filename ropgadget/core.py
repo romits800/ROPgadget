@@ -210,6 +210,12 @@ class Core(cmd.Cmd):
                     self.functions().list()
                 else:
                     print("Not implemented on 32 bit yet.")
+            elif self.__options.fns2lines:
+                arch = self.__binary.getArchMode()
+                if arch != CS_MODE_32:
+                    self.functions().lines()
+                else:
+                    print("Not implemented on 32 bit yet.")
             return True
 
 

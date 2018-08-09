@@ -26,7 +26,7 @@ def fetchLines(args):
     return output.splitlines(False)
 
 
-
+#  llvm-nm -print-armap  is the mac os x equivalent (otool has removed the functionality.)
 def doNM(executable):
     addrs = []
     intervals = []
@@ -89,6 +89,14 @@ class Functions(object):
         data = sorted(self.__fns.items(), key=operator.itemgetter(1), reverse=True)
         with open(path, 'w') as fp:
             json.dump(data, fp)
+        print("Wrote {0} entries out to {1}\n".format(len(data), path))
+
+    def lines(self):
+        path = self.__options.fns2lines
+        data = sorted(self.__fns.items(), key=operator.itemgetter(1), reverse=True)
+        with open(path, 'w') as fp:
+            for d in data:
+                fp.write("{0} {1}\n".format(d[0], d[1]))
         print("Wrote {0} entries out to {1}\n".format(len(data), path))
 
 
