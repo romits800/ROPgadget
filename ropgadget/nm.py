@@ -1,4 +1,5 @@
 import collections
+import os
 import re
 import sys
 import json
@@ -9,6 +10,17 @@ from subprocess import *
 
 linedata = re.compile('([0-9a-f]+)\s+(\w)\s+_?(\w+)', re.IGNORECASE)
 
+
+#quick and dirty for now
+def resolveNM():
+    nm = 'nm'
+    enm = os.environ.get('NM', None)
+    if enm is not None:
+        nm = enm
+    return nm
+
+
+nm = resolveNM()
 
 
 def fetchLines(args):
@@ -32,7 +44,7 @@ def doNM(executable):
     intervals = []
     previous = None
     mapping = collections.OrderedDict()
-    nmCmd  = ['nm', '-C', '-a', '-n',  executable]
+    nmCmd  = [nm, '-C', '-a', '-n',  executable]
     lines = fetchLines(nmCmd)
     for line in lines:
         m = linedata.match(line)

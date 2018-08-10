@@ -165,13 +165,11 @@ class Core(cmd.Cmd):
         return True
 
     def analyze(self):
-
         try:
             self.__offset = int(self.__options.offset, 16) if self.__options.offset else 0
         except ValueError:
             print("[Error] The offset must be in hexadecimal")
             return False
-
         if self.__options.console:
             if self.__options.binary:
                 self.__binary = Binary(self.__options)
