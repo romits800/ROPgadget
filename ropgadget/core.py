@@ -9,7 +9,6 @@
 import cmd
 import os
 import re
-
 import codecs
 import ropgadget.rgutils as rgutils
 import sqlite3
@@ -20,7 +19,7 @@ from ropgadget.gadgets            import Gadgets
 from ropgadget.options            import Options
 from ropgadget.ropchain.ropmaker  import ROPMaker
 from ropgadget.nm                 import Functions
-
+from collections import defaultdict
 class Core(cmd.Cmd):
     def __init__(self, options):
         cmd.Cmd.__init__(self)
@@ -73,6 +72,7 @@ class Core(cmd.Cmd):
             return False
 
         G = Gadgets(self.__binary, self.__options, self.__offset)
+        print ('inside get gadgets')
         execSections = self.__binary.getExecSections()
 
         # Find ROP/JOP/SYS gadgets
@@ -99,6 +99,73 @@ class Core(cmd.Cmd):
 
         return True
 
+    def __default_to_regular(self,d):
+        if isinstance(d, defaultdict):
+            d = {k: self.__default_to_regular(v) for k, v in d.items()}
+        return d
+
+    def __makingclasses(self):
+        ##Read from the current file
+        print ('making_classes')
+        single_byte_ins = ["leave","clc","aaa","sahf","daa","aas"]
+        recursivedict=lambda:defaultdict(recursivedict)
+        gadgetclasses=recursivedict()
+        with codecs.open('classes.txt','r','utf-8') as fp:
+            for line in fp:
+                line.strip()
+                if not line:
+                    break
+                if line.split(' ',1)[0]=="classname":
+                   classname=line.split(' ',1)[1].strip()
+                else: 
+                    instruction=line 
+                    instruction=instruction.strip()
+                    instruction=instruction.split(',',1)
+                    firstpart=instruction[0].strip()
+                    opcode=firstpart.split(' ',1)[0]
+                    if opcode=="leave": # for single instructions with no operands
+                        try:
+                            lists=gadgetclasses[opcode]
+                        except:
+                            pass
+                        finally:
+                            if not lists:
+                                gadgetclasses[opcode]=[classname]
+                            else:
+                                lists.append(classname)
+                        continue
+
+                    operand1=firstpart.partition(' ')[2].strip()
+                    operand2=""
+                    if len(instruction)>1:
+                        operand2=instruction[1].strip()
+                    if operand2!="":#for instructions with two operands
+                        lists=[]
+                        try:
+                            lists=gadgetclasses[opcode][operand1][operand2]
+                        except:
+                            pass
+                        finally:
+                            if not lists:
+                                gadgetclasses[opcode][operand1][operand2]=[classname]
+                            else:
+                                lists.append(classname)
+                    else: #for instructions with one operand
+                        lists=[]
+                        try:
+                            lists=gadgetclasses[opcode][operand1]
+                        except:
+                            pass
+                        finally:
+                            if not lists:
+                                gadgetclasses[opcode][operand1]=[classname]
+                            else:
+                                lists.append(classname)
+
+
+        gadgetclasses=self.__default_to_regular(gadgetclasses)
+    #    print gadgetclasses
+        return gadgetclasses
 
     def __lookingForGadgets(self):
 
@@ -112,12 +179,62 @@ class Core(cmd.Cmd):
         print("Gadgets information\n============================================================")
         for gadget in self.__gadgets:
             vaddr = gadget["vaddr"]
+            insts=  gadget["gadget"]
+            bytes = gadget["bytes"]
+            bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
+            print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(insts) + bytesStr)
+        #self.__makingclasses() 
+        print("\nUnique gadgets found: %d" %(len(self.__gadgets)))
+        return True
+
+
+    def __checkingForClasses(self):
+
+        if self.__checksBeforeManipulations() == False:
+            return False
+
+        if self.__options.silent:
+            return True
+        classes = self.__makingclasses()
+    #    print classes
+        class_ins = {}
+        arch = self.__binary.getArchMode()
+        print("Gadgets information\n============================================================")
+        for gadget in self.__gadgets:
+            vaddr = gadget["vaddr"]
             insts = gadget["gadget"]
             bytes = gadget["bytes"]
             bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
 
-            print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(insts) + bytesStr)
+            single_ins = insts.split(' ; ')[:-1]
+            if(len(single_ins)==1):
+                separated_ins  = single_ins[0].split(" ",1)
+                opcode = separated_ins[0]
+                if(len(separated_ins) == 2):
+                    arguments = separated_ins[1].split(", ")
+                elif(len(separated_ins)==1):
+                    arguments = []
+                #    print arguments
+                try:
+                    data = classes[opcode]
+                    for i in arguments:
+                        data = data[i]
+                   # print data
+                    for j in data:
+                        try:
+                            class_ins[j].append({u'addr' : vaddr, u'ins' : insts + bytesStr,u'arch' : arch })
+                        except:
+                            class_ins[j] = [{u'addr' : vaddr, u'ins' : insts + bytesStr, u'arch':arch}]
+                except:
+                    #print "Error"
+                    continue;
+        for cls in class_ins.keys():
+            print "\n===========================================================\n",cls, "\n==========================================================="
+            for ins in class_ins[cls]:
+                print(("0x%08x" %(ins["addr"]) if ins["arch"] == CS_MODE_32 else "0x%016x" %(ins["addr"])) + " : %s" %(ins["ins"]))
 
+    #    print class_ins.keys()
+        print len(class_ins.keys()), "Classes Satisfied"
         print("\nUnique gadgets found: %d" %(len(self.__gadgets)))
         return True
 
@@ -214,8 +331,12 @@ class Core(cmd.Cmd):
         elif self.__options.opcode:   return self.__lookingForOpcodes(self.__options.opcode)
         elif self.__options.memstr:   return self.__lookingForMemStr(self.__options.memstr)
         else:
-            self.__getAllgadgets()
-            self.__lookingForGadgets()
+            self.__getGadgets()
+            if(self.__options.microgadgets):
+                self.__checkingForClasses()
+        #    print self.__options
+            else:
+                self.__lookingForGadgets()
             if self.__options.ropchain:
                 ROPMaker(self.__binary, self.__gadgets, self.__offset)
             elif self.__options.fns:

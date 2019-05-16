@@ -1,0 +1,2299 @@
+classname inc/dec
+inc eax,
+inc ebx,
+inc ecx,
+inc edx,
+inc ebp,
+inc esi,
+inc edi,
+dec eax,
+dec ebx,
+dec ecx,
+dec edx,
+dec ebp,
+dec esi,
+dec edi,
+classname pop
+pop eax,
+pop ebx,
+pop ecx,
+pop edx,
+pop ebp,
+pop esi,
+pop edi,
+classname add/adc/sub/sbb
+add eax, ebx
+add eax, ecx
+add eax, edx
+add eax, ebp
+add eax, esi
+add eax, edi
+add ebx, eax
+add ebx, ecx
+add ebx, ebp
+add ebx, esi
+add ebx, edi
+add ebx, edi
+add ecx, eax
+add ecx, ebx
+add ecx, edx
+add ecx, ebp
+add ecx, esi
+add ecx, edi
+add edx, eax
+add edx, ebx
+add edx, ecx
+add edx, ebp
+add edx, esi
+add edx, edi
+add ebp, eax
+add ebp, ebx
+add ebp, ecx
+add ebp, edx
+add ebp, esi
+add ebp, edi
+add edi, eax
+add edi, ebx
+add edi, ecx
+add edi, edx
+add edi, ebp
+add edi, esi
+add esi, eax
+add esi, ebx
+add esi, ecx
+add esi, edx
+add esi, ebp
+add esi, edi
+add dword ptr [eax], ebx
+add dword ptr [eax], ecx
+add dword ptr [eax], edx
+add dword ptr [eax], ebp
+add dword ptr [eax], edi
+add dword ptr [eax], esi
+add dword ptr [ebx], eax
+add dword ptr [ebx], ecx
+add dword ptr [ebx], edx
+add dword ptr [ebx], ebp
+add dword ptr [ebx], esi
+add dword ptr [ebx], edi
+add dword ptr [ecx], eax
+add dword ptr [ecx], ebx
+add dword ptr [ecx], edx
+add dword ptr [ecx], ebp
+add dword ptr [ecx], esi
+add dword ptr [ecx], edi
+add dword ptr [edx], eax
+add dword ptr [edx], ebx
+add dword ptr [edx], ecx
+add dword ptr [edx], ebp
+add dword ptr [edx], esi
+add dword ptr [edx], edi
+add dword ptr [ebp], eax
+add dword ptr [ebp], ebx
+add dword ptr [ebp], ecx
+add dword ptr [ebp], edx
+add dword ptr [ebp], esi
+add dword ptr [ebp], edi
+add dword ptr [esi], eax
+add dword ptr [esi], ebx
+add dword ptr [esi], ecx
+add dword ptr [esi], edx
+add dword ptr [esi], ebp
+add dword ptr [esi], edi
+add dword ptr [edi], eax
+add dword ptr [edi], ebx
+add dword ptr [edi], ecx
+add dword ptr [edi], edx
+add dword ptr [edi], ebp
+add dword ptr [edi], esi
+add ebx, dword ptr [eax]
+add ecx, dword ptr [eax]
+add edx, dword ptr [eax]
+add ebp, dword ptr [eax]
+add edi,  dword ptr [eax]
+add esi,  dword ptr [eax]
+add eax, dword ptr [ebx]
+add ecx, dword ptr [ebx]
+add edx, dword ptr [ebx]
+add ebp, dword ptr [ebx]
+add esi,  dword ptr [ebx]
+add edi,  dword ptr [ebx]
+add eax, dword ptr [ecx]
+add ebx, dword ptr [ecx]
+add edx, dword ptr [ecx]
+add ebp, dword ptr [ecx]
+add esi,  dword ptr [ecx]
+add edi,  dword ptr [ecx]
+add eax, dword ptr [edx]
+add ebx, dword ptr [edx]
+add ecx, dword ptr [edx]
+add ebp, dword ptr [edx]
+add esi,  dword ptr [edx]
+add edi,  dword ptr [edx]
+add eax, dword ptr [ebp]
+add ebx, dword ptr [ebp]
+add ecx, dword ptr [ebp]
+add edx, dword ptr [ebp]
+add esi,  dword ptr [ebp]
+add edi,  dword ptr [ebp]
+add eax, dword ptr [esi]
+add ebx, dword ptr [esi]
+add ecx, dword ptr [esi]
+add edx, dword ptr [esi]
+add ebp,  dword ptr [esi]
+add edi,  dword ptr [esi]
+add eax, dword ptr [edi]
+add ebx, dword ptr [edi]
+add ecx, dword ptr [edi]
+add edx, dword ptr [edi]
+add ebp,  dword ptr [edi]
+add esi,  dword ptr [edi]
+adc eax, ebx
+adc eax, ecx
+adc eax, edx
+adc eax, ebp
+adc eax, esi
+adc eax, edi
+adc ebx, eax
+adc ebx, ecx
+adc ebx, ebp
+adc ebx, esi
+adc ebx, edi
+adc ebx, edi
+adc ecx, eax
+adc ecx, ebx
+adc ecx, edx
+adc ecx, ebp
+adc ecx, esi
+adc ecx, edi
+adc edx, eax
+adc edx, ebx
+adc edx, ecx
+adc edx, ebp
+adc edx, esi
+adc edx, edi
+adc ebp, eax
+adc ebp, ebx
+adc ebp, ecx
+adc ebp, edx
+adc ebp, esi
+adc ebp, edi
+adc edi, eax
+adc edi, ebx
+adc edi, ecx
+adc edi, edx
+adc edi, ebp
+adc edi, esi
+adc esi, eax
+adc esi, ebx
+adc esi, ecx
+adc esi, edx
+adc esi, ebp
+adc esi, edi
+adc dword ptr [eax], ebx
+adc dword ptr [eax], ecx
+adc dword ptr [eax], edx
+adc dword ptr [eax], ebp
+adc dword ptr [eax], edi
+adc dword ptr [eax], esi
+adc dword ptr [ebx], eax
+adc dword ptr [ebx], ecx
+adc dword ptr [ebx], edx
+adc dword ptr [ebx], ebp
+adc dword ptr [ebx], esi
+adc dword ptr [ebx], edi
+adc dword ptr [ecx], eax
+adc dword ptr [ecx], ebx
+adc dword ptr [ecx], edx
+adc dword ptr [ecx], ebp
+adc dword ptr [ecx], esi
+adc dword ptr [ecx], edi
+adc dword ptr [edx], eax
+adc dword ptr [edx], ebx
+adc dword ptr [edx], ecx
+adc dword ptr [edx], ebp
+adc dword ptr [edx], esi
+adc dword ptr [edx], edi
+adc dword ptr [ebp], eax
+adc dword ptr [ebp], ebx
+adc dword ptr [ebp], ecx
+adc dword ptr [ebp], edx
+adc dword ptr [ebp], esi
+adc dword ptr [ebp], edi
+adc dword ptr [esi], eax
+adc dword ptr [esi], ebx
+adc dword ptr [esi], ecx
+adc dword ptr [esi], edx
+adc dword ptr [esi], ebp
+adc dword ptr [esi], edi
+adc dword ptr [edi], eax
+adc dword ptr [edi], ebx
+adc dword ptr [edi], ecx
+adc dword ptr [edi], edx
+adc dword ptr [edi], ebp
+adc dword ptr [edi], esi
+adc ebx, dword ptr [eax]
+adc ecx, dword ptr [eax]
+adc edx, dword ptr [eax]
+adc ebp, dword ptr [eax]
+adc edi,  dword ptr [eax]
+adc esi,  dword ptr [eax]
+adc eax, dword ptr [ebx]
+adc ecx, dword ptr [ebx]
+adc edx, dword ptr [ebx]
+adc ebp, dword ptr [ebx]
+adc esi,  dword ptr [ebx]
+adc edi,  dword ptr [ebx]
+adc eax, dword ptr [ecx]
+adc ebx, dword ptr [ecx]
+adc edx, dword ptr [ecx]
+adc ebp, dword ptr [ecx]
+adc esi,  dword ptr [ecx]
+adc edi,  dword ptr [ecx]
+adc eax, dword ptr [edx]
+adc ebx, dword ptr [edx]
+adc ecx, dword ptr [edx]
+adc ebp, dword ptr [edx]
+adc esi,  dword ptr [edx]
+adc edi,  dword ptr [edx]
+adc eax, dword ptr [ebp]
+adc ebx, dword ptr [ebp]
+adc ecx, dword ptr [ebp]
+adc edx, dword ptr [ebp]
+adc esi,  dword ptr [ebp]
+adc edi,  dword ptr [ebp]
+adc eax, dword ptr [esi]
+adc ebx, dword ptr [esi]
+adc ecx, dword ptr [esi]
+adc edx, dword ptr [esi]
+adc ebp,  dword ptr [esi]
+adc edi,  dword ptr [esi]
+adc eax, dword ptr [edi]
+adc ebx, dword ptr [edi]
+adc ecx, dword ptr [edi]
+adc edx, dword ptr [edi]
+adc ebp,  dword ptr [edi]
+adc esi,  dword ptr [edi]
+sub eax, ebx
+sub eax, ecx
+sub eax, edx
+sub eax, ebp
+sub eax, esi
+sub eax, edi
+sub ebx, eax
+sub ebx, ecx
+sub ebx, ebp
+sub ebx, esi
+sub ebx, edi
+sub ebx, edi
+sub ecx, eax
+sub ecx, ebx
+sub ecx, edx
+sub ecx, ebp
+sub ecx, esi
+sub ecx, edi
+sub edx, eax
+sub edx, ebx
+sub edx, ecx
+sub edx, ebp
+sub edx, esi
+sub edx, edi
+sub ebp, eax
+sub ebp, ebx
+sub ebp, ecx
+sub ebp, edx
+sub ebp, esi
+sub ebp, edi
+sub edi, eax
+sub edi, ebx
+sub edi, ecx
+sub edi, edx
+sub edi, ebp
+sub edi, esi
+sub esi, eax
+sub esi, ebx
+sub esi, ecx
+sub esi, edx
+sub esi, ebp
+sub esi, edi
+sub dword ptr [eax], ebx
+sub dword ptr [eax], ecx
+sub dword ptr [eax], edx
+sub dword ptr [eax], ebp
+sub dword ptr [eax], edi
+sub dword ptr [eax], esi
+sub dword ptr [ebx], eax
+sub dword ptr [ebx], ecx
+sub dword ptr [ebx], edx
+sub dword ptr [ebx], ebp
+sub dword ptr [ebx], esi
+sub dword ptr [ebx], edi
+sub dword ptr [ecx], eax
+sub dword ptr [ecx], ebx
+sub dword ptr [ecx], edx
+sub dword ptr [ecx], ebp
+sub dword ptr [ecx], esi
+sub dword ptr [ecx], edi
+sub dword ptr [edx], eax
+sub dword ptr [edx], ebx
+sub dword ptr [edx], ecx
+sub dword ptr [edx], ebp
+sub dword ptr [edx], esi
+sub dword ptr [edx], edi
+sub dword ptr [ebp], eax
+sub dword ptr [ebp], ebx
+sub dword ptr [ebp], ecx
+sub dword ptr [ebp], edx
+sub dword ptr [ebp], esi
+sub dword ptr [ebp], edi
+sub dword ptr [esi], eax
+sub dword ptr [esi], ebx
+sub dword ptr [esi], ecx
+sub dword ptr [esi], edx
+sub dword ptr [esi], ebp
+sub dword ptr [esi], edi
+sub dword ptr [edi], eax
+sub dword ptr [edi], ebx
+sub dword ptr [edi], ecx
+sub dword ptr [edi], edx
+sub dword ptr [edi], ebp
+sub dword ptr [edi], esi
+sub ebx, dword ptr [eax]
+sub ecx, dword ptr [eax]
+sub edx, dword ptr [eax]
+sub ebp, dword ptr [eax]
+sub edi, dword ptr [eax]
+sub esi, dword ptr [eax]
+sub eax, dword ptr [ebx]
+sub ecx, dword ptr [ebx]
+sub edx, dword ptr [ebx]
+sub ebp, dword ptr [ebx]
+sub esi, dword ptr [ebx]
+sub edi, dword ptr [ebx]
+sub eax, dword ptr [ecx]
+sub ebx, dword ptr [ecx]
+sub edx, dword ptr [ecx]
+sub ebp, dword ptr [ecx]
+sub esi, dword ptr [ecx]
+sub edi, dword ptr [ecx]
+sub eax, dword ptr [edx]
+sub ebx, dword ptr [edx]
+sub ecx, dword ptr [edx]
+sub ebp, dword ptr [edx]
+sub esi, dword ptr [edx]
+sub edi, dword ptr [edx]
+sub eax, dword ptr [ebp]
+sub ebx, dword ptr [ebp]
+sub ecx, dword ptr [ebp]
+sub edx, dword ptr [ebp]
+sub esi, dword ptr [ebp]
+sub edi, dword ptr [ebp]
+sub eax, dword ptr [esi]
+sub ebx, dword ptr [esi]
+sub ecx, dword ptr [esi]
+sub edx, dword ptr [esi]
+sub ebp, dword ptr [esi]
+sub edi, dword ptr [esi]
+sub eax, dword ptr [edi]
+sub ebx, dword ptr [edi]
+sub ecx, dword ptr [edi]
+sub edx, dword ptr [edi]
+sub ebp, dword ptr [edi]
+sub esi, dword ptr [edi]
+sbb eax, ebx
+sbb eax, ecx
+sbb eax, edx
+sbb eax, ebp
+sbb eax, esi
+sbb eax, edi
+sbb ebx, eax
+sbb ebx, ecx
+sbb ebx, ebp
+sbb ebx, esi
+sbb ebx, edi
+sbb ebx, edi
+sbb ecx, eax
+sbb ecx, ebx
+sbb ecx, edx
+sbb ecx, ebp
+sbb ecx, esi
+sbb ecx, edi
+sbb edx, eax
+sbb edx, ebx
+sbb edx, ecx
+sbb edx, ebp
+sbb edx, esi
+sbb edx, edi
+sbb ebp, eax
+sbb ebp, ebx
+sbb ebp, ecx
+sbb ebp, edx
+sbb ebp, esi
+sbb ebp, edi
+sbb edi, eax
+sbb edi, ebx
+sbb edi, ecx
+sbb edi, edx
+sbb edi, ebp
+sbb edi, esi
+sbb esi, eax
+sbb esi, ebx
+sbb esi, ecx
+sbb esi, edx
+sbb esi, ebp
+sbb esi, edi
+sbb dword ptr [eax], ebx
+sbb dword ptr [eax], ecx
+sbb dword ptr [eax], edx
+sbb dword ptr [eax], ebp
+sbb dword ptr [eax], edi
+sbb dword ptr [eax], esi
+sbb dword ptr [ebx], eax
+sbb dword ptr [ebx], ecx
+sbb dword ptr [ebx], edx
+sbb dword ptr [ebx], ebp
+sbb dword ptr [ebx], esi
+sbb dword ptr [ebx], edi
+sbb dword ptr [ecx], eax
+sbb dword ptr [ecx], ebx
+sbb dword ptr [ecx], edx
+sbb dword ptr [ecx], ebp
+sbb dword ptr [ecx], esi
+sbb dword ptr [ecx], edi
+sbb dword ptr [edx], eax
+sbb dword ptr [edx], ebx
+sbb dword ptr [edx], ecx
+sbb dword ptr [edx], ebp
+sbb dword ptr [edx], esi
+sbb dword ptr [edx], edi
+sbb dword ptr [ebp], eax
+sbb dword ptr [ebp], ebx
+sbb dword ptr [ebp], ecx
+sbb dword ptr [ebp], edx
+sbb dword ptr [ebp], esi
+sbb dword ptr [ebp], edi
+sbb dword ptr [esi], eax
+sbb dword ptr [esi], ebx
+sbb dword ptr [esi], ecx
+sbb dword ptr [esi], edx
+sbb dword ptr [esi], ebp
+sbb dword ptr [esi], edi
+sbb dword ptr [edi], eax
+sbb dword ptr [edi], ebx
+sbb dword ptr [edi], ecx
+sbb dword ptr [edi], edx
+sbb dword ptr [edi], ebp
+sbb dword ptr [edi], esi
+sbb ebx, dword ptr [eax]
+sbb ecx, dword ptr [eax]
+sbb edx, dword ptr [eax]
+sbb ebp, dword ptr [eax]
+sbb edi, dword ptr [eax]
+sbb esi, dword ptr [eax]
+sbb eax, dword ptr [ebx]
+sbb ecx, dword ptr [ebx]
+sbb edx, dword ptr [ebx]
+sbb ebp, dword ptr [ebx]
+sbb esi, dword ptr [ebx]
+sbb edi, dword ptr [ebx]
+sbb eax, dword ptr [ecx]
+sbb ebx, dword ptr [ecx]
+sbb edx, dword ptr [ecx]
+sbb ebp, dword ptr [ecx]
+sbb esi, dword ptr [ecx]
+sbb edi, dword ptr [ecx]
+sbb eax, dword ptr [edx]
+sbb ebx, dword ptr [edx]
+sbb ecx, dword ptr [edx]
+sbb ebp, dword ptr [edx]
+sbb esi, dword ptr [edx]
+sbb edi, dword ptr [edx]
+sbb eax, dword ptr [ebp]
+sbb ebx, dword ptr [ebp]
+sbb ecx, dword ptr [ebp]
+sbb edx, dword ptr [ebp]
+sbb esi, dword ptr [ebp]
+sbb edi, dword ptr [ebp]
+sbb eax, dword ptr [esi]
+sbb ebx, dword ptr [esi]
+sbb ecx, dword ptr [esi]
+sbb edx, dword ptr [esi]
+sbb ebp, dword ptr [esi]
+sbb edi, dword ptr [esi]
+sbb eax, dword ptr [edi]
+sbb ebx, dword ptr [edi]
+sbb ecx, dword ptr [edi]
+sbb edx, dword ptr [edi]
+sbb ebp, dword ptr [edi]
+sbb esi, dword ptr [edi]
+classname xor/not/neg
+xor eax, ebx
+xor eax, ecx
+xor eax, edx
+xor eax, ebp
+xor eax, esi
+xor eax, edi
+xor ebx, eax
+xor ebx, ecx
+xor ebx, edx
+xor ebx, ebp
+xor ebx, esi
+xor ebx, edi
+xor ecx, eax
+xor ecx, ebx
+xor ecx, edx
+xor ecx, ebp
+xor ecx, esi
+xor ecx, edi
+xor edx, eax
+xor edx, ebx
+xor edx, ecx
+xor edx, ebp
+xor edx, esi
+xor edx, edi
+xor ebp, eax
+xor ebp, ebx
+xor ebp, ecx
+xor ebp, edx
+xor ebp, esi
+xor ebp, edi
+xor esi, eax
+xor esi, ebx
+xor esi, ecx
+xor esi, edx
+xor esi, ebp
+xor esi, edi
+xor edi, eax
+xor edi, ebx
+xor edi, ecx
+xor edi, edx
+xor edi, ebp
+xor edi, esi
+xor ebx, dword ptr [eax]
+xor ecx, dword ptr [eax]
+xor edx, dword ptr [eax]
+xor ebp, dword ptr [eax]
+xor edi, dword ptr [eax]
+xor esi, dword ptr [eax]
+xor eax, dword ptr [ebx]
+xor ecx, dword ptr [ebx]
+xor edx, dword ptr [ebx]
+xor ebp, dword ptr [ebx]
+xor esi, dword ptr [ebx]
+xor edi, dword ptr [ebx]
+xor eax, dword ptr [ecx]
+xor ebx, dword ptr [ecx]
+xor edx, dword ptr [ecx]
+xor ebp, dword ptr [ecx]
+xor esi, dword ptr [ecx]
+xor edi, dword ptr [ecx]
+xor eax, dword ptr [edx]
+xor ebx, dword ptr [edx]
+xor ecx, dword ptr [edx]
+xor ebp, dword ptr [edx]
+xor esi, dword ptr [edx]
+xor edi, dword ptr [edx]
+xor eax, dword ptr [ebp]
+xor ebx, dword ptr [ebp]
+xor ecx, dword ptr [ebp]
+xor edx, dword ptr [ebp]
+xor esi, dword ptr [ebp]
+xor edi, dword ptr [ebp]
+xor eax, dword ptr [esi]
+xor ebx, dword ptr [esi]
+xor ecx, dword ptr [esi]
+xor edx, dword ptr [esi]
+xor ebp, dword ptr [esi]
+xor edi, dword ptr [esi]
+xor eax, dword ptr [edi]
+xor ebx, dword ptr [edi]
+xor ecx, dword ptr [edi]
+xor edx, dword ptr [edi]
+xor ebp, dword ptr [edi]
+xor esi, dword ptr [edi]
+xor dword ptr [eax], ebx
+xor dword ptr [eax], ecx
+xor dword ptr [eax], edx
+xor dword ptr [eax], ebp
+xor dword ptr [eax], edi
+xor dword ptr [eax], esi
+xor dword ptr [ebx], eax
+xor dword ptr [ebx], ecx
+xor dword ptr [ebx], edx
+xor dword ptr [ebx], ebp
+xor dword ptr [ebx], esi
+xor dword ptr [ebx], edi
+xor dword ptr [ecx], eax
+xor dword ptr [ecx], ebx
+xor dword ptr [ecx], edx
+xor dword ptr [ecx], ebp
+xor dword ptr [ecx], esi
+xor dword ptr [ecx], edi
+xor dword ptr [edx], eax
+xor dword ptr [edx], ebx
+xor dword ptr [edx], ecx
+xor dword ptr [edx], ebp
+xor dword ptr [edx], esi
+xor dword ptr [edx], edi
+xor dword ptr [ebp], eax
+xor dword ptr [ebp], ebx
+xor dword ptr [ebp], ecx
+xor dword ptr [ebp], edx
+xor dword ptr [ebp], esi
+xor dword ptr [ebp], edi
+xor dword ptr [esi], eax
+xor dword ptr [esi], ebx
+xor dword ptr [esi], ecx
+xor dword ptr [esi], edx
+xor dword ptr [esi], ebp
+xor dword ptr [esi], edi
+xor dword ptr [edi], eax
+xor dword ptr [edi], ebx
+xor dword ptr [edi], ecx
+xor dword ptr [edi], edx
+xor dword ptr [edi], ebp
+xor dword ptr [edi], esi
+not eax,
+not ebx,
+not ecx,
+not edx,
+not ebp,
+not esi,
+not edi,
+not [eax],
+not [ebx],
+not [ecx],
+not [edx],
+not [ebp],
+not [esi],
+not [edi],
+neg eax,
+neg ebx,
+neg ecx,
+neg edx,
+neg ebp,
+neg esi,
+neg edi,
+neg [eax],
+neg [ebx],
+neg [ecx],
+neg [edx],
+neg [ebp],
+neg [esi],
+neg [edi],
+classname and/or
+and eax, ebx
+and eax, ecx
+and eax, edx
+and eax, ebp
+and eax, esi
+and eax, edi
+and ebx, eax
+and ebx, ecx
+and ebx, edx
+and ebx, ebp
+and ebx, esi
+and ebx, edi
+and ecx, eax
+and ecx, ebx
+and ecx, edx
+and ecx, ebp
+and ecx, esi
+and ecx, edi
+and edx, eax
+and edx, ebx
+and edx, ecx
+and edx, ebp
+and edx, esi
+and edx, edi
+and ebp, eax
+and ebp, ebx
+and ebp, ecx
+and ebp, edx
+and ebp, esi
+and ebp, edi
+and esi, eax
+and esi, ebx
+and esi, ecx
+and esi, edx
+and esi, ebp
+and esi, edi
+and edi, eax
+and edi, ebx
+and edi, ecx
+and edi, edx
+and edi, ebp
+and edi, esi
+and ebx, dword ptr [eax]
+and ecx, dword ptr [eax]
+and edx, dword ptr [eax]
+and ebp, dword ptr [eax]
+and edi, dword ptr [eax]
+and esi, dword ptr [eax]
+and eax, dword ptr [ebx]
+and ecx, dword ptr [ebx]
+and edx, dword ptr [ebx]
+and ebp, dword ptr [ebx]
+and esi, dword ptr [ebx]
+and edi, dword ptr [ebx]
+and eax, dword ptr [ecx]
+and ebx, dword ptr [ecx]
+and edx, dword ptr [ecx]
+and ebp, dword ptr [ecx]
+and esi, dword ptr [ecx]
+and edi, dword ptr [ecx]
+and eax, dword ptr [edx]
+and ebx, dword ptr [edx]
+and ecx, dword ptr [edx]
+and ebp, dword ptr [edx]
+and esi, dword ptr [edx]
+and edi, dword ptr [edx]
+and eax, dword ptr [ebp]
+and ebx, dword ptr [ebp]
+and ecx, dword ptr [ebp]
+and edx, dword ptr [ebp]
+and esi, dword ptr [ebp]
+and edi, dword ptr [ebp]
+and eax, dword ptr [esi]
+and ebx, dword ptr [esi]
+and ecx, dword ptr [esi]
+and edx, dword ptr [esi]
+and ebp, dword ptr [esi]
+and edi, dword ptr [esi]
+and eax, dword ptr [edi]
+and ebx, dword ptr [edi]
+and ecx, dword ptr [edi]
+and edx, dword ptr [edi]
+and ebp, dword ptr [edi]
+and esi, dword ptr [edi]
+and dword ptr [eax], ebx
+and dword ptr [eax], ecx
+and dword ptr [eax], edx
+and dword ptr [eax], ebp
+and dword ptr [eax], edi
+and dword ptr [eax], esi
+and dword ptr [ebx], eax
+and dword ptr [ebx], ecx
+and dword ptr [ebx], edx
+and dword ptr [ebx], ebp  
+and dword ptr [ebx], esi 
+and dword ptr [ebx], edi
+and dword ptr [ecx], eax
+and dword ptr [ecx], ebx
+and dword ptr [ecx], edx
+and dword ptr [ecx], ebp
+and dword ptr [ecx], esi
+and dword ptr [ecx], edi
+and dword ptr [edx], eax
+and dword ptr [edx], ebx
+and dword ptr [edx], ecx
+and dword ptr [edx], ebp  
+and dword ptr [edx], esi 
+and dword ptr [edx], edi
+and dword ptr [ebp], eax
+and dword ptr [ebp], ebx
+and dword ptr [ebp], ecx
+and dword ptr [ebp], edx
+and dword ptr [ebp], esi
+and dword ptr [ebp], edi
+and dword ptr [esi], eax
+and dword ptr [esi], ebx
+and dword ptr [esi], ecx
+and dword ptr [esi], edx
+and dword ptr [esi], ebp
+and dword ptr [esi], edi
+and dword ptr [edi], eax
+and dword ptr [edi], ebx
+and dword ptr [edi], ecx
+and dword ptr [edi], edx
+and dword ptr [edi], ebp 
+and dword ptr [edi], esi
+or eax, ebx
+or eax, ecx
+or eax, edx
+or eax, ebp
+or eax, esi
+or eax, edi
+or ebx, eax
+or ebx, ecx
+or ebx, edx
+or ebx, ebp
+or ebx, esi
+or ebx, edi
+or ecx, eax
+or ecx, ebx
+or ecx, edx
+or ecx, ebp
+or ecx, esi
+or ecx, edi
+or edx, eax
+or edx, ebx
+or edx, ecx
+or edx, ebp
+or edx, esi
+or edx, edi
+or ebp, eax
+or ebp, ebx
+or ebp, ecx
+or ebp, edx
+or ebp, esi
+or ebp, edi
+or esi, eax
+or esi, ebx
+or esi, ecx
+or esi, edx
+or esi, ebp
+or esi, edi
+or edi, eax
+or edi, ebx
+or edi, ecx
+or edi, edx
+or edi, ebp
+or edi, esi
+or ebx, dword ptr [eax]
+or ecx, dword ptr [eax]
+or edx, dword ptr [eax]
+or ebp, dword ptr [eax]
+or edi, dword ptr [eax]
+or esi, dword ptr [eax]
+or eax, dword ptr [ebx]
+or ecx, dword ptr [ebx]
+or edx, dword ptr [ebx]
+or ebp, dword ptr [ebx]
+or esi, dword ptr [ebx]
+or edi, dword ptr [ebx]
+or eax, dword ptr [ecx]
+or ebx, dword ptr [ecx]
+or edx, dword ptr [ecx]
+or ebp, dword ptr [ecx]
+or esi, dword ptr [ecx]
+or edi, dword ptr [ecx]
+or eax, dword ptr [edx]
+or ebx, dword ptr [edx]
+or ecx, dword ptr [edx]
+or ebp, dword ptr [edx]
+or esi, dword ptr [edx]
+or edi, dword ptr [edx]
+or eax, dword ptr [ebp]
+or ebx, dword ptr [ebp]
+or ecx, dword ptr [ebp]
+or edx, dword ptr [ebp]
+or esi, dword ptr [ebp]
+or edi, dword ptr [ebp]
+or eax, dword ptr [esi]
+or ebx, dword ptr [esi]
+or ecx, dword ptr [esi]
+or edx, dword ptr [esi]
+or ebp, dword ptr [esi]
+or edi, dword ptr [esi]   
+or eax, dword ptr [edi]
+or ebx, dword ptr [edi]
+or ecx, dword ptr [edi]
+or edx, dword ptr [edi]
+or ebp, dword ptr [edi]
+or esi, dword ptr [edi]
+or dword ptr [eax], ebx
+or dword ptr [eax], ecx
+or dword ptr [eax], edx
+or dword ptr [eax], ebp
+or dword ptr [eax], edi
+or dword ptr [eax], esi
+or dword ptr [ebx], eax
+or dword ptr [ebx], ecx
+or dword ptr [ebx], edx
+or dword ptr [ebx], ebp  
+or dword ptr [ebx], esi 
+or dword ptr [ebx], edi
+or dword ptr [ecx], eax
+or dword ptr [ecx], ebx
+or dword ptr [ecx], edx
+or dword ptr [ecx], ebp
+or dword ptr [ecx], esi
+or dword ptr [ecx], edi
+or dword ptr [edx], eax
+or dword ptr [edx], ebx
+or dword ptr [edx], ecx
+or dword ptr [edx], ebp  
+or dword ptr [edx], esi 
+or dword ptr [edx], edi
+or dword ptr [ebp], eax
+or dword ptr [ebp], ebx
+or dword ptr [ebp], ecx
+or dword ptr [ebp], edx
+or dword ptr [ebp], esi
+or dword ptr [ebp], edi
+or dword ptr [esi], eax
+or dword ptr [esi], ebx
+or dword ptr [esi], ecx
+or dword ptr [esi], edx
+or dword ptr [esi], ebp
+or dword ptr [esi], edi
+or dword ptr [edi], eax
+or dword ptr [edi], ebx
+or dword ptr [edi], ecx
+or dword ptr [edi], edx
+or dword ptr [edi], ebp 
+or dword ptr [edi], esi
+classname load from memory
+mov eax, dword ptr [ebx]
+mov eax, dword ptr [ecx]
+mov eax, dword ptr [edx]
+mov eax, dword ptr [ebp]
+mov eax, dword ptr [esi]
+mov eax, dword ptr [edi]
+mov ebx, dword ptr [eax]
+mov ebx, dword ptr [ecx]
+mov ebx, dword ptr [edx]
+mov ebx, dword ptr [ebp]
+mov ebx, dword ptr [esi]
+mov ebx, dword ptr [edi]
+mov ecx, dword ptr [ebx]
+mov ecx, dword ptr [eax]
+mov ecx, dword ptr [edx]
+mov ecx, dword ptr [ebp]
+mov ecx, dword ptr [esi]
+mov ecx, dword ptr [edi]
+mov edx, dword ptr [ebx]
+mov edx, dword ptr [ecx]
+mov edx, dword ptr [eax]
+mov edx, dword ptr [ebp]
+mov edx, dword ptr [esi]
+mov edx, dword ptr [edi]
+mov ebp, dword ptr [ebx]
+mov ebp, dword ptr [ecx]
+mov ebp, dword ptr [edx]
+mov ebp, dword ptr [eax]
+mov ebp, dword ptr [esi]
+mov ebp, dword ptr [edi]
+mov esi, dword ptr [ebx]
+mov esi, dword ptr [ecx]
+mov esi, dword ptr [edx]
+mov esi, dword ptr [ebp]
+mov esi, dword ptr [eax]
+mov esi, dword ptr [edi]
+mov edi, dword ptr [ebx]
+mov edi, dword ptr [ecx]
+mov edi, dword ptr [edx]
+mov edi, dword ptr [ebp]
+mov edi, dword ptr [esi]
+mov edi, dword ptr [eax]
+add ebx, dword ptr [eax]
+add ecx, dword ptr [eax]
+add edx, dword ptr [eax]
+add ebp, dword ptr [eax]
+add edi, dword ptr [eax]
+add esi, dword ptr [eax]
+add eax, dword ptr [ebx]
+add ecx, dword ptr [ebx]
+add edx, dword ptr [ebx]
+add ebp, dword ptr [ebx]
+add esi, dword ptr [ebx]
+add edi, dword ptr [ebx]
+add eax, dword ptr [ecx]
+add ebx, dword ptr [ecx]
+add edx, dword ptr [ecx]
+add ebp, dword ptr [ecx]
+add esi, dword ptr [ecx]
+add edi, dword ptr [ecx]
+add eax, dword ptr [edx]
+add ebx, dword ptr [edx]
+add ecx, dword ptr [edx]
+add ebp, dword ptr [edx]
+add esi, dword ptr [edx]
+add edi, dword ptr [edx]
+add eax, dword ptr [ebp]
+add ebx, dword ptr [ebp]
+add ecx, dword ptr [ebp]
+add edx, dword ptr [ebp]
+add esi, dword ptr [ebp]
+add edi, dword ptr [ebp]
+add eax, dword ptr [esi]
+add ebx, dword ptr [esi]
+add ecx, dword ptr [esi]
+add edx, dword ptr [esi]
+add ebp, dword ptr [esi]
+add edi, dword ptr [esi]
+add eax, dword ptr [edi]
+add ebx, dword ptr [edi]
+add ecx, dword ptr [edi]
+add edx, dword ptr [edi]
+add ebp, dword ptr [edi]
+add esi, dword ptr [edi]
+or ecx, dword ptr [eax]
+or edx, dword ptr [eax]
+or ebp, dword ptr [eax]
+or edi, dword ptr [eax]
+or esi, dword ptr [eax]
+or eax, dword ptr [ebx]
+or ecx, dword ptr [ebx]
+or edx, dword ptr [ebx]
+or ebp, dword ptr [ebx]
+or esi, dword ptr [ebx]
+or edi, dword ptr [ebx]
+or eax, dword ptr [ecx]
+or ebx, dword ptr [ecx]
+or edx, dword ptr [ecx]
+or ebp, dword ptr [ecx]
+or esi, dword ptr [ecx]
+or edi, dword ptr [ecx]
+or eax, dword ptr [edx]
+or ebx, dword ptr [edx]
+or ecx, dword ptr [edx]
+or ebp, dword ptr [edx]
+or esi, dword ptr [edx]
+or edi, dword ptr [edx]
+or eax, dword ptr [ebp]
+or ebx, dword ptr [ebp]
+or ecx, dword ptr [ebp]
+or edx, dword ptr [ebp]
+or esi, dword ptr [ebp]
+or edi, dword ptr [ebp]
+or eax, dword ptr [esi]
+or ebx, dword ptr [esi]
+or ecx, dword ptr [esi]
+or edx, dword ptr [esi]
+or ebp, dword ptr [esi]
+or edi, dword ptr [esi]
+or eax, dword ptr [edi]
+or ebx, dword ptr [edi]
+or ecx, dword ptr [edi]
+or edx, dword ptr [edi]
+or ebp, dword ptr [edi]
+or esi, dword ptr [edi]	
+or dword ptr [eax], ebx
+or dword ptr [eax], ecx
+or dword ptr [eax], edx
+or dword ptr [eax], ebp
+or dword ptr [eax], edi
+or dword ptr [eax], esi
+or dword ptr [ebx], eax
+or dword ptr [ebx], ecx
+or dword ptr [ebx], edx
+or dword ptr [ebx], ebp  
+or dword ptr [ebx], esi 
+or dword ptr [ebx], edi
+or dword ptr [ecx], eax
+or dword ptr [ecx], ebx
+or dword ptr [ecx], edx
+or dword ptr [ecx], ebp
+or dword ptr [ecx], esi
+or dword ptr [ecx], edi
+or dword ptr [edx], eax
+or dword ptr [edx], ebx
+or dword ptr [edx], ecx
+or dword ptr [edx], ebp  
+or dword ptr [edx], esi 
+or dword ptr [edx], edi
+or dword ptr [ebp], eax
+or dword ptr [ebp], ebx
+or dword ptr [ebp], ecx
+or dword ptr [ebp], edx
+or dword ptr [ebp], esi
+or dword ptr [ebp], edi
+or dword ptr [esi], eax
+or dword ptr [esi], ebx
+or dword ptr [esi], ecx
+or dword ptr [esi], edx
+or dword ptr [esi], ebp
+or dword ptr [esi], edi
+or dword ptr [edi], eax
+or dword ptr [edi], ebx
+or dword ptr [edi], ecx
+or dword ptr [edi], edx
+or dword ptr [edi], ebp 
+or dword ptr [edi], esi
+lodsd eax, dword ptr [ebx]
+lodsd eax, dword ptr [ecx]
+lodsd eax, dword ptr [edx]
+lodsd eax, dword ptr [esi]
+lodsd eax, dword ptr [edi]
+lodsd eax, dword ptr [ebp]
+classname store to memory
+stosd dword ptr [ecx], eax
+stosd dword ptr [ebx], eax
+stosd dword ptr [edx], eax
+stosd dword ptr [esi], eax
+stosd dword ptr [edi], eax
+stosd dword ptr [ebp], eax
+mov dword ptr [eax], ecx
+mov dword ptr [eax], edx
+mov dword ptr [eax], ebp
+mov dword ptr [eax], edi
+mov dword ptr [eax], esi
+mov dword ptr [ebx], eax
+mov dword ptr [ebx], ecx
+mov dword ptr [ebx], edx
+mov dword ptr [ebx], ebp  
+mov dword ptr [ebx], esi 
+mov dword ptr [ebx], edi
+mov dword ptr [ecx], eax
+mov dword ptr [ecx], ebx
+mov dword ptr [ecx], edx
+mov dword ptr [ecx], ebp
+mov dword ptr [ecx], esi
+mov dword ptr [ecx], edi
+mov dword ptr [edx], eax
+mov dword ptr [edx], ebx
+mov dword ptr [edx], ecx
+mov dword ptr [edx], ebp  
+mov dword ptr [edx], esi 
+mov dword ptr [edx], edi
+mov dword ptr [ebp], eax
+mov dword ptr [ebp], ebx
+mov dword ptr [ebp], ecx
+mov dword ptr [ebp], edx
+mov dword ptr [ebp], esi
+mov dword ptr [ebp], edi
+mov dword ptr [esi], eax
+mov dword ptr [esi], ebx
+mov dword ptr [esi], ecx
+mov dword ptr [esi], edx
+mov dword ptr [esi], ebp
+mov dword ptr [esi], edi
+mov dword ptr [edi], eax
+mov dword ptr [edi], ebx
+mov dword ptr [edi], ecx
+mov dword ptr [edi], edx
+mov dword ptr [edi], ebp 
+mov dword ptr [edi], esi
+add dword ptr [eax], ecx
+add dword ptr [eax], edx
+add dword ptr [eax], ebp
+add dword ptr [eax], edi
+add dword ptr [eax], esi
+add dword ptr [ebx], eax
+add dword ptr [ebx], ecx
+add dword ptr [ebx], edx
+add dword ptr [ebx], ebp  
+add dword ptr [ebx], esi 
+add dword ptr [ebx], edi
+add dword ptr [ecx], eax
+add dword ptr [ecx], ebx
+add dword ptr [ecx], edx
+add dword ptr [ecx], ebp
+add dword ptr [ecx], esi
+add dword ptr [ecx], edi
+add dword ptr [edx], eax
+add dword ptr [edx], ebx
+add dword ptr [edx], ecx
+add dword ptr [edx], ebp  
+add dword ptr [edx], esi 
+add dword ptr [edx], edi
+add dword ptr [ebp], eax
+add dword ptr [ebp], ebx
+add dword ptr [ebp], ecx
+add dword ptr [ebp], edx
+add dword ptr [ebp], esi
+add dword ptr [ebp], edi
+add dword ptr [esi], eax
+add dword ptr [esi], ebx
+add dword ptr [esi], ecx
+add dword ptr [esi], edx
+add dword ptr [esi], ebp
+add dword ptr [esi], edi
+add dword ptr [edi], eax
+add dword ptr [edi], ebx
+add dword ptr [edi], ecx
+add dword ptr [edi], edx
+add dword ptr [edi], ebp 
+add dword ptr [edi], esi
+or dword ptr [eax], ecx
+or dword ptr [eax], edx
+or dword ptr [eax], ebp
+or dword ptr [eax], edi
+or dword ptr [eax], esi
+or dword ptr [ebx], eax
+or dword ptr [ebx], ecx
+or dword ptr [ebx], edx
+or dword ptr [ebx], ebp  
+or dword ptr [ebx], esi 
+or dword ptr [ebx], edi
+or dword ptr [ecx], eax
+or dword ptr [ecx], ebx
+or dword ptr [ecx], edx
+or dword ptr [ecx], ebp
+or dword ptr [ecx], esi
+or dword ptr [ecx], edi
+or dword ptr [edx], eax
+or dword ptr [edx], ebx
+or dword ptr [edx], ecx
+or dword ptr [edx], ebp  
+or dword ptr [edx], esi 
+or dword ptr [edx], edi
+or dword ptr [ebp], eax
+or dword ptr [ebp], ebx
+or dword ptr [ebp], ecx
+or dword ptr [ebp], edx
+or dword ptr [ebp], esi
+or dword ptr [ebp], edi
+or dword ptr [esi], eax
+or dword ptr [esi], ebx
+or dword ptr [esi], ecx
+or dword ptr [esi], edx
+or dword ptr [esi], ebp
+or dword ptr [esi], edi
+or dword ptr [edi], eax
+or dword ptr [edi], ebx
+or dword ptr [edi], ecx
+or dword ptr [edi], edx
+or dword ptr [edi], ebp 
+or dword ptr [edi], esi
+classname CF
+add eax, ebx
+add eax, ecx
+add eax, edx
+add eax, ebp
+add eax, esi
+add eax, edi
+add ebx, eax
+add ebx, ecx
+add ebx, ebp
+add ebx, esi
+add ebx, edi
+add ebx, edi
+add ecx, eax
+add ecx, ebx
+add ecx, edx
+add ecx, ebp
+add ecx, esi
+add ecx, edi
+add edx, eax
+add edx, ebx
+add edx, ecx
+add edx, ebp
+add edx, esi
+add edx, edi
+add ebp, eax
+add ebp, ebx
+add ebp, ecx
+add ebp, edx
+add ebp, esi
+add ebp, edi
+add edi, eax
+add edi, ebx
+add edi, ecx
+add edi, edx
+add edi, ebp
+add edi, esi
+add esi, eax
+add esi, ebx
+add esi, ecx
+add esi, edx
+add esi, ebp
+add esi, edi
+add dword ptr [eax], ebx
+add dword ptr [eax], ecx
+add dword ptr [eax], edx
+add dword ptr [eax], ebp
+add dword ptr [eax], edi
+add dword ptr [eax], esi
+add dword ptr [ebx], eax
+add dword ptr [ebx], ecx
+add dword ptr [ebx], edx
+add dword ptr [ebx], ebp
+add dword ptr [ebx], esi
+add dword ptr [ebx], edi
+add dword ptr [ecx], eax
+add dword ptr [ecx], ebx
+add dword ptr [ecx], edx
+add dword ptr [ecx], ebp
+add dword ptr [ecx], esi
+add dword ptr [ecx], edi
+add dword ptr [edx], eax
+add dword ptr [edx], ebx
+add dword ptr [edx], ecx
+add dword ptr [edx], ebp
+add dword ptr [edx], esi
+add dword ptr [edx], edi
+add dword ptr [ebp], eax
+add dword ptr [ebp], ebx
+add dword ptr [ebp], ecx
+add dword ptr [ebp], edx
+add dword ptr [ebp], esi
+add dword ptr [ebp], edi
+add dword ptr [esi], eax
+add dword ptr [esi], ebx
+add dword ptr [esi], ecx
+add dword ptr [esi], edx
+add dword ptr [esi], ebp
+add dword ptr [esi], edi
+add dword ptr [edi], eax
+add dword ptr [edi], ebx
+add dword ptr [edi], ecx
+add dword ptr [edi], edx
+add dword ptr [edi], ebp
+add dword ptr [edi], esi
+add ebx, dword ptr [eax]
+add ecx, dword ptr [eax]
+add edx, dword ptr [eax]
+add ebp, dword ptr [eax]
+add edi, dword ptr [eax]
+add esi, dword ptr [eax]
+add eax, dword ptr [ebx]
+add ecx, dword ptr [ebx]
+add edx, dword ptr [ebx]
+add ebp, dword ptr [ebx]
+add esi, dword ptr [ebx]
+add edi, dword ptr [ebx]
+add eax, dword ptr [ecx]
+add ebx, dword ptr [ecx]
+add edx, dword ptr [ecx]
+add ebp, dword ptr [ecx]
+add esi, dword ptr [ecx]
+add edi, dword ptr [ecx]
+add eax, dword ptr [edx]
+add ebx, dword ptr [edx]
+add ecx, dword ptr [edx]
+add ebp, dword ptr [edx]
+add esi, dword ptr [edx]
+add edi, dword ptr [edx]
+add eax, dword ptr [ebp]
+add ebx, dword ptr [ebp]
+add ecx, dword ptr [ebp]
+add edx, dword ptr [ebp]
+add esi, dword ptr [ebp]
+add edi, dword ptr [ebp]
+add eax, dword ptr [esi]
+add ebx, dword ptr [esi]
+add ecx, dword ptr [esi]
+add edx, dword ptr [esi]
+add ebp, dword ptr [esi]
+add edi, dword ptr [esi]
+add eax, dword ptr [edi]
+add ebx, dword ptr [edi]
+add ecx, dword ptr [edi]
+add edx, dword ptr [edi]
+add ebp, dword ptr [edi]
+add esi, dword ptr [edi]
+adc eax, ebx
+adc eax, ecx
+adc eax, edx
+adc eax, ebp
+adc eax, esi
+adc eax, edi
+adc ebx, eax
+adc ebx, ecx
+adc ebx, ebp
+adc ebx, esi
+adc ebx, edi
+adc ebx, edi
+adc ecx, eax
+adc ecx, ebx
+adc ecx, edx
+adc ecx, ebp
+adc ecx, esi
+adc ecx, edi
+adc edx, eax
+adc edx, ebx
+adc edx, ecx
+adc edx, ebp
+adc edx, esi
+adc edx, edi
+adc ebp, eax
+adc ebp, ebx
+adc ebp, ecx
+adc ebp, edx
+adc ebp, esi
+adc ebp, edi
+adc edi, eax
+adc edi, ebx
+adc edi, ecx
+adc edi, edx
+adc edi, ebp
+adc edi, esi
+adc esi, eax
+adc esi, ebx
+adc esi, ecx
+adc esi, edx
+adc esi, ebp
+adc esi, edi
+adc dword ptr [eax], ebx
+adc dword ptr [eax], ecx
+adc dword ptr [eax], edx
+adc dword ptr [eax], ebp
+adc dword ptr [eax], edi
+adc dword ptr [eax], esi
+adc dword ptr [ebx], eax
+adc dword ptr [ebx], ecx
+adc dword ptr [ebx], edx
+adc dword ptr [ebx], ebp
+adc dword ptr [ebx], esi
+adc dword ptr [ebx], edi
+adc dword ptr [ecx], eax
+adc dword ptr [ecx], ebx
+adc dword ptr [ecx], edx
+adc dword ptr [ecx], ebp
+adc dword ptr [ecx], esi
+adc dword ptr [ecx], edi
+adc dword ptr [edx], eax
+adc dword ptr [edx], ebx
+adc dword ptr [edx], ecx
+adc dword ptr [edx], ebp
+adc dword ptr [edx], esi
+adc dword ptr [edx], edi
+adc dword ptr [ebp], eax
+adc dword ptr [ebp], ebx
+adc dword ptr [ebp], ecx
+adc dword ptr [ebp], edx
+adc dword ptr [ebp], esi
+adc dword ptr [ebp], edi
+adc dword ptr [esi], eax
+adc dword ptr [esi], ebx
+adc dword ptr [esi], ecx
+adc dword ptr [esi], edx
+adc dword ptr [esi], ebp
+adc dword ptr [esi], edi
+adc dword ptr [edi], eax
+adc dword ptr [edi], ebx
+adc dword ptr [edi], ecx
+adc dword ptr [edi], edx
+adc dword ptr [edi], ebp
+adc dword ptr [edi], esi
+adc ebx, dword ptr [eax]
+adc ecx, dword ptr [eax]
+adc edx, dword ptr [eax]
+adc ebp, dword ptr [eax]
+adc edi, dword ptr [eax]
+adc esi, dword ptr [eax]
+adc eax, dword ptr [ebx]
+adc ecx, dword ptr [ebx]
+adc edx, dword ptr [ebx]
+adc ebp, dword ptr [ebx]
+adc esi, dword ptr [ebx]
+adc edi, dword ptr [ebx]
+adc eax, dword ptr [ecx]
+adc ebx, dword ptr [ecx]
+adc edx, dword ptr [ecx]
+adc ebp, dword ptr [ecx]
+adc esi, dword ptr [ecx]
+adc edi, dword ptr [ecx]
+adc eax, dword ptr [edx]
+adc ebx, dword ptr [edx]
+adc ecx, dword ptr [edx]
+adc ebp, dword ptr [edx]
+adc esi, dword ptr [edx]
+adc edi, dword ptr [edx]
+adc eax, dword ptr [ebp]
+adc ebx, dword ptr [ebp]
+adc ecx, dword ptr [ebp]
+adc edx, dword ptr [ebp]
+adc esi, dword ptr [ebp]
+adc edi, dword ptr [ebp]
+adc eax, dword ptr [esi]
+adc ebx, dword ptr [esi]
+adc ecx, dword ptr [esi]
+adc edx, dword ptr [esi]
+adc ebp, dword ptr [esi]
+adc edi, dword ptr [esi]
+adc eax, dword ptr [edi]
+adc ebx, dword ptr [edi]
+adc ecx, dword ptr [edi]
+adc edx, dword ptr [edi]
+adc ebp, dword ptr [edi]
+adc esi, dword ptr [edi]
+sub eax, ebx
+sub eax, ecx
+sub eax, edx
+sub eax, ebp
+sub eax, esi
+sub eax, edi
+sub ebx, eax
+sub ebx, ecx
+sub ebx, ebp
+sub ebx, esi
+sub ebx, edi
+sub ebx, edi
+sub ecx, eax
+sub ecx, ebx
+sub ecx, edx
+sub ecx, ebp
+sub ecx, esi
+sub ecx, edi
+sub edx, eax
+sub edx, ebx
+sub edx, ecx
+sub edx, ebp
+sub edx, esi
+sub edx, edi
+sub ebp, eax
+sub ebp, ebx
+sub ebp, ecx
+sub ebp, edx
+sub ebp, esi
+sub ebp, edi
+sub edi, eax
+sub edi, ebx
+sub edi, ecx
+sub edi, edx
+sub edi, ebp
+sub edi, esi
+sub esi, eax
+sub esi, ebx
+sub esi, ecx
+sub esi, edx
+sub esi, ebp
+sub esi, edi
+sub dword ptr [eax], ebx
+sub dword ptr [eax], ecx
+sub dword ptr [eax], edx
+sub dword ptr [eax], ebp
+sub dword ptr [eax], edi
+sub dword ptr [eax], esi
+sub dword ptr [ebx], eax
+sub dword ptr [ebx], ecx
+sub dword ptr [ebx], edx
+sub dword ptr [ebx], ebp
+sub dword ptr [ebx], esi
+sub dword ptr [ebx], edi
+sub dword ptr [ecx], eax
+sub dword ptr [ecx], ebx
+sub dword ptr [ecx], edx
+sub dword ptr [ecx], ebp
+sub dword ptr [ecx], esi
+sub dword ptr [ecx], edi
+sub dword ptr [edx], eax
+sub dword ptr [edx], ebx
+sub dword ptr [edx], ecx
+sub dword ptr [edx], ebp
+sub dword ptr [edx], esi
+sub dword ptr [edx], edi
+sub dword ptr [ebp], eax
+sub dword ptr [ebp], ebx
+sub dword ptr [ebp], ecx
+sub dword ptr [ebp], edx
+sub dword ptr [ebp], esi
+sub dword ptr [ebp], edi
+sub dword ptr [esi], eax
+sub dword ptr [esi], ebx
+sub dword ptr [esi], ecx
+sub dword ptr [esi], edx
+sub dword ptr [esi], ebp
+sub dword ptr [esi], edi
+sub dword ptr [edi], eax
+sub dword ptr [edi], ebx
+sub dword ptr [edi], ecx
+sub dword ptr [edi], edx
+sub dword ptr [edi], ebp
+sub dword ptr [edi], esi
+sub ebx, dword ptr [eax]
+sub ecx, dword ptr [eax]
+sub edx, dword ptr [eax]
+sub ebp, dword ptr [eax]
+sub edi, dword ptr [eax]
+sub esi, dword ptr [eax]
+sub eax, dword ptr [ebx]
+sub ecx, dword ptr [ebx]
+sub edx, dword ptr [ebx]
+sub ebp, dword ptr [ebx]
+sub esi, dword ptr [ebx]
+sub edi, dword ptr [ebx]
+sub eax, dword ptr [ecx]
+sub ebx, dword ptr [ecx]
+sub edx, dword ptr [ecx]
+sub ebp, dword ptr [ecx]
+sub esi, dword ptr [ecx]
+sub edi, dword ptr [ecx]
+sub eax, dword ptr [edx]
+sub ebx, dword ptr [edx]
+sub ecx, dword ptr [edx]
+sub ebp, dword ptr [edx]
+sub esi, dword ptr [edx]
+sub edi, dword ptr [edx]
+sub eax, dword ptr [ebp]
+sub ebx, dword ptr [ebp]
+sub ecx, dword ptr [ebp]
+sub edx, dword ptr [ebp]
+sub esi, dword ptr [ebp]
+sub edi, dword ptr [ebp]
+sub eax, dword ptr [esi]
+sub ebx, dword ptr [esi]
+sub ecx, dword ptr [esi]
+sub edx, dword ptr [esi]
+sub ebp, dword ptr [esi]
+sub edi, dword ptr [esi]
+sub eax, dword ptr [edi]
+sub ebx, dword ptr [edi]
+sub ecx, dword ptr [edi]
+sub edx, dword ptr [edi]
+sub ebp, dword ptr [edi]
+sub esi, dword ptr [edi]
+sbb eax, ebx
+sbb eax, ecx
+sbb eax, edx
+sbb eax, ebp
+sbb eax, esi
+sbb eax, edi
+sbb ebx, eax
+sbb ebx, ecx
+sbb ebx, ebp
+sbb ebx, esi
+sbb ebx, edi
+sbb ebx, edi
+sbb ecx, eax
+sbb ecx, ebx
+sbb ecx, edx
+sbb ecx, ebp
+sbb ecx, esi
+sbb ecx, edi
+sbb edx, eax
+sbb edx, ebx
+sbb edx, ecx
+sbb edx, ebp
+sbb edx, esi
+sbb edx, edi
+sbb ebp, eax
+sbb ebp, ebx
+sbb ebp, ecx
+sbb ebp, edx
+sbb ebp, esi
+sbb ebp, edi
+sbb edi, eax
+sbb edi, ebx
+sbb edi, ecx
+sbb edi, edx
+sbb edi, ebp
+sbb edi, esi
+sbb esi, eax
+sbb esi, ebx
+sbb esi, ecx
+sbb esi, edx
+sbb esi, ebp
+sbb esi, edi
+sbb dword ptr [eax], ebx
+sbb dword ptr [eax], ecx
+sbb dword ptr [eax], edx
+sbb dword ptr [eax], ebp
+sbb dword ptr [eax], edi
+sbb dword ptr [eax], esi
+sbb dword ptr [ebx], eax
+sbb dword ptr [ebx], ecx
+sbb dword ptr [ebx], edx
+sbb dword ptr [ebx], ebp
+sbb dword ptr [ebx], esi
+sbb dword ptr [ebx], edi
+sbb dword ptr [ecx], eax
+sbb dword ptr [ecx], ebx
+sbb dword ptr [ecx], edx
+sbb dword ptr [ecx], ebp
+sbb dword ptr [ecx], esi
+sbb dword ptr [ecx], edi
+sbb dword ptr [edx], eax
+sbb dword ptr [edx], ebx
+sbb dword ptr [edx], ecx
+sbb dword ptr [edx], ebp
+sbb dword ptr [edx], esi
+sbb dword ptr [edx], edi
+sbb dword ptr [ebp], eax
+sbb dword ptr [ebp], ebx
+sbb dword ptr [ebp], ecx
+sbb dword ptr [ebp], edx
+sbb dword ptr [ebp], esi
+sbb dword ptr [ebp], edi
+sbb dword ptr [esi], eax
+sbb dword ptr [esi], ebx
+sbb dword ptr [esi], ecx
+sbb dword ptr [esi], edx
+sbb dword ptr [esi], ebp
+sbb dword ptr [esi], edi
+sbb dword ptr [edi], eax
+sbb dword ptr [edi], ebx
+sbb dword ptr [edi], ecx
+sbb dword ptr [edi], edx
+sbb dword ptr [edi], ebp
+sbb dword ptr [edi], esi
+sbb ebx, dword ptr [eax]
+sbb ecx, dword ptr [eax]
+sbb edx, dword ptr [eax]
+sbb ebp, dword ptr [eax]
+sbb edi, dword ptr [eax]
+sbb esi, dword ptr [eax]
+sbb eax, dword ptr [ebx]
+sbb ecx, dword ptr [ebx]
+sbb edx, dword ptr [ebx]
+sbb ebp, dword ptr [ebx]
+sbb esi, dword ptr [ebx]
+sbb edi, dword ptr [ebx]
+sbb eax, dword ptr [ecx]
+sbb ebx, dword ptr [ecx]
+sbb edx, dword ptr [ecx]
+sbb ebp, dword ptr [ecx]
+sbb esi, dword ptr [ecx]
+sbb edi, dword ptr [ecx]
+sbb eax, dword ptr [edx]
+sbb ebx, dword ptr [edx]
+sbb ecx, dword ptr [edx]
+sbb ebp, dword ptr [edx]
+sbb esi, dword ptr [edx]
+sbb edi, dword ptr [edx]
+sbb eax, dword ptr [ebp]
+sbb ebx, dword ptr [ebp]
+sbb ecx, dword ptr [ebp]
+sbb edx, dword ptr [ebp]
+sbb esi, dword ptr [ebp]
+sbb edi, dword ptr [ebp]
+sbb eax, dword ptr [esi]
+sbb ebx, dword ptr [esi]
+sbb ecx, dword ptr [esi]
+sbb edx, dword ptr [esi]
+sbb ebp, dword ptr [esi]
+sbb edi, dword ptr [esi]
+sbb eax, dword ptr [edi]
+sbb ebx, dword ptr [edi]
+sbb ecx, dword ptr [edi]
+sbb edx, dword ptr [edi]
+sbb ebp, dword ptr [edi]
+sbb esi, dword ptr [edi]
+classname set ESP / load ESP
+add eax, ebx
+add eax, ecx
+add eax, edx
+add eax, ebp
+add eax, esi
+add eax, edi
+add ebx, eax
+add ebx, ecx
+add ebx, ebp
+add ebx, esi
+add ebx, edi
+add ebx, edi
+add ecx, eax
+add ecx, ebx
+add ecx, edx
+add ecx, ebp
+add ecx, esi
+add ecx, edi
+add edx, eax
+add edx, ebx
+add edx, ecx
+add edx, ebp
+add edx, esi
+add edx, edi
+add ebp, eax
+add ebp, ebx
+add ebp, ecx
+add ebp, edx
+add ebp, esi
+add ebp, edi
+add edi, eax
+add edi, ebx
+add edi, ecx
+add edi, edx
+add edi, ebp
+add edi, esi
+add esi, eax
+add esi, ebx
+add esi, ecx
+add esi, edx
+add esi, ebp
+add esi, edi
+add dword ptr [eax], ebx
+add dword ptr [eax], ecx
+add dword ptr [eax], edx
+add dword ptr [eax], ebp
+add dword ptr [eax], edi
+add dword ptr [eax], esi
+add dword ptr [ebx], eax
+add dword ptr [ebx], ecx
+add dword ptr [ebx], edx
+add dword ptr [ebx], ebp
+add dword ptr [ebx], esi
+add dword ptr [ebx], edi
+add dword ptr [ecx], eax
+add dword ptr [ecx], ebx
+add dword ptr [ecx], edx
+add dword ptr [ecx], ebp
+add dword ptr [ecx], esi
+add dword ptr [ecx], edi
+add dword ptr [edx], eax
+add dword ptr [edx], ebx
+add dword ptr [edx], ecx
+add dword ptr [edx], ebp
+add dword ptr [edx], esi
+add dword ptr [edx], edi
+add dword ptr [ebp], eax
+add dword ptr [ebp], ebx
+add dword ptr [ebp], ecx
+add dword ptr [ebp], edx
+add dword ptr [ebp], esi
+add dword ptr [ebp], edi
+add dword ptr [esi], eax
+add dword ptr [esi], ebx
+add dword ptr [esi], ecx
+add dword ptr [esi], edx
+add dword ptr [esi], ebp
+add dword ptr [esi], edi
+add dword ptr [edi], eax
+add dword ptr [edi], ebx
+add dword ptr [edi], ecx
+add dword ptr [edi], edx
+add dword ptr [edi], ebp
+add dword ptr [edi], esi
+add ebx, dword ptr [eax]
+add ecx, dword ptr [eax]
+add edx, dword ptr [eax]
+add ebp, dword ptr [eax]
+add edi, dword ptr [eax]
+add esi, dword ptr [eax]
+add eax, dword ptr [ebx]
+add ecx, dword ptr [ebx]
+add edx, dword ptr [ebx]
+add ebp, dword ptr [ebx]
+add esi, dword ptr [ebx]
+add edi, dword ptr [ebx]
+add eax, dword ptr [ecx]
+add ebx, dword ptr [ecx]
+add edx, dword ptr [ecx]
+add ebp, dword ptr [ecx]
+add esi, dword ptr [ecx]
+add edi, dword ptr [ecx]
+add eax, dword ptr [edx]
+add ebx, dword ptr [edx]
+add ecx, dword ptr [edx]
+add ebp, dword ptr [edx]
+add esi, dword ptr [edx]
+add edi, dword ptr [edx]
+add eax, dword ptr [ebp]
+add ebx, dword ptr [ebp]
+add ecx, dword ptr [ebp]
+add edx, dword ptr [ebp]
+add esi, dword ptr [ebp]
+add edi, dword ptr [ebp]
+add eax, dword ptr [esi]
+add ebx, dword ptr [esi]
+add ecx, dword ptr [esi]
+add edx, dword ptr [esi]
+add ebp, dword ptr [esi]
+add edi, dword ptr [esi]
+add eax, dword ptr [edi]
+add ebx, dword ptr [edi]
+add ecx, dword ptr [edi]
+add edx, dword ptr [edi]
+add ebp, dword ptr [edi]
+add esi, dword ptr [edi]
+adc eax, ebx
+adc eax, ecx
+adc eax, edx
+adc eax, ebp
+adc eax, esi
+adc eax, edi
+adc ebx, eax
+adc ebx, ecx
+adc ebx, ebp
+adc ebx, esi
+adc ebx, edi
+adc ebx, edi
+adc ecx, eax
+adc ecx, ebx
+adc ecx, edx
+adc ecx, ebp
+adc ecx, esi
+adc ecx, edi
+adc edx, eax
+adc edx, ebx
+adc edx, ecx
+adc edx, ebp
+adc edx, esi
+adc edx, edi
+adc ebp, eax
+adc ebp, ebx
+adc ebp, ecx
+adc ebp, edx
+adc ebp, esi
+adc ebp, edi
+adc edi, eax
+adc edi, ebx
+adc edi, ecx
+adc edi, edx
+adc edi, ebp
+adc edi, esi
+adc esi, eax
+adc esi, ebx
+adc esi, ecx
+adc esi, edx
+adc esi, ebp
+adc esi, edi
+adc dword ptr [eax], ebx
+adc dword ptr [eax], ecx
+adc dword ptr [eax], edx
+adc dword ptr [eax], ebp
+adc dword ptr [eax], edi
+adc dword ptr [eax], esi
+adc dword ptr [ebx], eax
+adc dword ptr [ebx], ecx
+adc dword ptr [ebx], edx
+adc dword ptr [ebx], ebp
+adc dword ptr [ebx], esi
+adc dword ptr [ebx], edi
+adc dword ptr [ecx], eax
+adc dword ptr [ecx], ebx
+adc dword ptr [ecx], edx
+adc dword ptr [ecx], ebp
+adc dword ptr [ecx], esi
+adc dword ptr [ecx], edi
+adc dword ptr [edx], eax
+adc dword ptr [edx], ebx
+adc dword ptr [edx], ecx
+adc dword ptr [edx], ebp
+adc dword ptr [edx], esi
+adc dword ptr [edx], edi
+adc dword ptr [ebp], eax
+adc dword ptr [ebp], ebx
+adc dword ptr [ebp], ecx
+adc dword ptr [ebp], edx
+adc dword ptr [ebp], esi
+adc dword ptr [ebp], edi
+adc dword ptr [esi], eax
+adc dword ptr [esi], ebx
+adc dword ptr [esi], ecx
+adc dword ptr [esi], edx
+adc dword ptr [esi], ebp
+adc dword ptr [esi], edi
+adc dword ptr [edi], eax
+adc dword ptr [edi], ebx
+adc dword ptr [edi], ecx
+adc dword ptr [edi], edx
+adc dword ptr [edi], ebp
+adc dword ptr [edi], esi
+adc ebx, dword ptr [eax]
+adc ecx, dword ptr [eax]
+adc edx, dword ptr [eax]
+adc ebp, dword ptr [eax]
+adc edi, dword ptr [eax]
+adc esi, dword ptr [eax]
+adc eax, dword ptr [ebx]
+adc ecx, dword ptr [ebx]
+adc edx, dword ptr [ebx]
+adc ebp, dword ptr [ebx]
+adc esi, dword ptr [ebx]
+adc edi, dword ptr [ebx]
+adc eax, dword ptr [ecx]
+adc ebx, dword ptr [ecx]
+adc edx, dword ptr [ecx]
+adc ebp, dword ptr [ecx]
+adc esi, dword ptr [ecx]
+adc edi, dword ptr [ecx]
+adc eax, dword ptr [edx]
+adc ebx, dword ptr [edx]
+adc ecx, dword ptr [edx]
+adc ebp, dword ptr [edx]
+adc esi, dword ptr [edx]
+adc edi, dword ptr [edx]
+adc eax, dword ptr [ebp]
+adc ebx, dword ptr [ebp]
+adc ecx, dword ptr [ebp]
+adc edx, dword ptr [ebp]
+adc esi, dword ptr [ebp]
+adc edi, dword ptr [ebp]
+adc eax, dword ptr [esi]
+adc ebx, dword ptr [esi]
+adc ecx, dword ptr [esi]
+adc edx, dword ptr [esi]
+adc ebp, dword ptr [esi]
+adc edi, dword ptr [esi]
+adc eax, dword ptr [edi]
+adc ebx, dword ptr [edi]
+adc ecx, dword ptr [edi]
+adc edx, dword ptr [edi]
+adc ebp, dword ptr [edi]
+adc esi, dword ptr [edi]
+sub eax, ebx
+sub eax, ecx
+sub eax, edx
+sub eax, ebp
+sub eax, esi
+sub eax, edi
+sub ebx, eax
+sub ebx, ecx
+sub ebx, ebp
+sub ebx, esi
+sub ebx, edi
+sub ebx, edi
+sub ecx, eax
+sub ecx, ebx
+sub ecx, edx
+sub ecx, ebp
+sub ecx, esi
+sub ecx, edi
+sub edx, eax
+sub edx, ebx
+sub edx, ecx
+sub edx, ebp
+sub edx, esi
+sub edx, edi
+sub ebp, eax
+sub ebp, ebx
+sub ebp, ecx
+sub ebp, edx
+sub ebp, esi
+sub ebp, edi
+sub edi, eax
+sub edi, ebx
+sub edi, ecx
+sub edi, edx
+sub edi, ebp
+sub edi, esi
+sub esi, eax
+sub esi, ebx
+sub esi, ecx
+sub esi, edx
+sub esi, ebp
+sub esi, edi
+sub dword ptr [eax], ebx
+sub dword ptr [eax], ecx
+sub dword ptr [eax], edx
+sub dword ptr [eax], ebp
+sub dword ptr [eax], edi
+sub dword ptr [eax], esi
+sub dword ptr [ebx], eax
+sub dword ptr [ebx], ecx
+sub dword ptr [ebx], edx
+sub dword ptr [ebx], ebp
+sub dword ptr [ebx], esi
+sub dword ptr [ebx], edi
+sub dword ptr [ecx], eax
+sub dword ptr [ecx], ebx
+sub dword ptr [ecx], edx
+sub dword ptr [ecx], ebp
+sub dword ptr [ecx], esi
+sub dword ptr [ecx], edi
+sub dword ptr [edx], eax
+sub dword ptr [edx], ebx
+sub dword ptr [edx], ecx
+sub dword ptr [edx], ebp
+sub dword ptr [edx], esi
+sub dword ptr [edx], edi
+sub dword ptr [ebp], eax
+sub dword ptr [ebp], ebx
+sub dword ptr [ebp], ecx
+sub dword ptr [ebp], edx
+sub dword ptr [ebp], esi
+sub dword ptr [ebp], edi
+sub dword ptr [esi], eax
+sub dword ptr [esi], ebx
+sub dword ptr [esi], ecx
+sub dword ptr [esi], edx
+sub dword ptr [esi], ebp
+sub dword ptr [esi], edi
+sub dword ptr [edi], eax
+sub dword ptr [edi], ebx
+sub dword ptr [edi], ecx
+sub dword ptr [edi], edx
+sub dword ptr [edi], ebp
+sub dword ptr [edi], esi
+sub ebx, dword ptr [eax]
+sub ecx, dword ptr [eax]
+sub edx, dword ptr [eax]
+sub ebp, dword ptr [eax]
+sub edi, dword ptr [eax]
+sub esi, dword ptr [eax]
+sub eax, dword ptr [ebx]
+sub ecx, dword ptr [ebx]
+sub edx, dword ptr [ebx]
+sub ebp, dword ptr [ebx]
+sub esi, dword ptr [ebx]
+sub edi, dword ptr [ebx]
+sub eax, dword ptr [ecx]
+sub ebx, dword ptr [ecx]
+sub edx, dword ptr [ecx]
+sub ebp, dword ptr [ecx]
+sub esi, dword ptr [ecx]
+sub edi, dword ptr [ecx]
+sub eax, dword ptr [edx]
+sub ebx, dword ptr [edx]
+sub ecx, dword ptr [edx]
+sub ebp, dword ptr [edx]
+sub esi, dword ptr [edx]
+sub edi, dword ptr [edx]
+sub eax, dword ptr [ebp]
+sub ebx, dword ptr [ebp]
+sub ecx, dword ptr [ebp]
+sub edx, dword ptr [ebp]
+sub esi, dword ptr [ebp]
+sub edi, dword ptr [ebp]
+sub eax, dword ptr [esi]
+sub ebx, dword ptr [esi]
+sub ecx, dword ptr [esi]
+sub edx, dword ptr [esi]
+sub ebp, dword ptr [esi]
+sub edi, dword ptr [esi]
+sub eax, dword ptr [edi]
+sub ebx, dword ptr [edi]
+sub ecx, dword ptr [edi]
+sub edx, dword ptr [edi]
+sub ebp, dword ptr [edi]
+sub esi, dword ptr [edi]
+sbb eax, ebx
+sbb eax, ecx
+sbb eax, edx
+sbb eax, ebp
+sbb eax, esi
+sbb eax, edi
+sbb ebx, eax
+sbb ebx, ecx
+sbb ebx, ebp
+sbb ebx, esi
+sbb ebx, edi
+sbb ebx, edi
+sbb ecx, eax
+sbb ecx, ebx
+sbb ecx, edx
+sbb ecx, ebp
+sbb ecx, esi
+sbb ecx, edi
+sbb edx, eax
+sbb edx, ebx
+sbb edx, ecx
+sbb edx, ebp
+sbb edx, esi
+sbb edx, edi
+sbb ebp, eax
+sbb ebp, ebx
+sbb ebp, ecx
+sbb ebp, edx
+sbb ebp, esi
+sbb ebp, edi
+sbb edi, eax
+sbb edi, ebx
+sbb edi, ecx
+sbb edi, edx
+sbb edi, ebp
+sbb edi, esi
+sbb esi, eax
+sbb esi, ebx
+sbb esi, ecx
+sbb esi, edx
+sbb esi, ebp
+sbb esi, edi
+sbb dword ptr [eax], ebx
+sbb dword ptr [eax], ecx
+sbb dword ptr [eax], edx
+sbb dword ptr [eax], ebp
+sbb dword ptr [eax], edi
+sbb dword ptr [eax], esi
+sbb dword ptr [ebx], eax
+sbb dword ptr [ebx], ecx
+sbb dword ptr [ebx], edx
+sbb dword ptr [ebx], ebp
+sbb dword ptr [ebx], esi
+sbb dword ptr [ebx], edi
+sbb dword ptr [ecx], eax
+sbb dword ptr [ecx], ebx
+sbb dword ptr [ecx], edx
+sbb dword ptr [ecx], ebp
+sbb dword ptr [ecx], esi
+sbb dword ptr [ecx], edi
+sbb dword ptr [edx], eax
+sbb dword ptr [edx], ebx
+sbb dword ptr [edx], ecx
+sbb dword ptr [edx], ebp
+sbb dword ptr [edx], esi
+sbb dword ptr [edx], edi
+sbb dword ptr [ebp], eax
+sbb dword ptr [ebp], ebx
+sbb dword ptr [ebp], ecx
+sbb dword ptr [ebp], edx
+sbb dword ptr [ebp], esi
+sbb dword ptr [ebp], edi
+sbb dword ptr [esi], eax
+sbb dword ptr [esi], ebx
+sbb dword ptr [esi], ecx
+sbb dword ptr [esi], edx
+sbb dword ptr [esi], ebp
+sbb dword ptr [esi], edi
+sbb dword ptr [edi], eax
+sbb dword ptr [edi], ebx
+sbb dword ptr [edi], ecx
+sbb dword ptr [edi], edx
+sbb dword ptr [edi], ebp
+sbb dword ptr [edi], esi
+sbb ebx, dword ptr [eax]
+sbb ecx, dword ptr [eax]
+sbb edx, dword ptr [eax]
+sbb ebp, dword ptr [eax]
+sbb edi, dword ptr [eax]
+sbb esi, dword ptr [eax]
+sbb eax, dword ptr [ebx]
+sbb ecx, dword ptr [ebx]
+sbb edx, dword ptr [ebx]
+sbb ebp, dword ptr [ebx]
+sbb esi, dword ptr [ebx]
+sbb edi, dword ptr [ebx]
+sbb eax, dword ptr [ecx]
+sbb ebx, dword ptr [ecx]
+sbb edx, dword ptr [ecx]
+sbb ebp, dword ptr [ecx]
+sbb esi, dword ptr [ecx]
+sbb edi, dword ptr [ecx]
+sbb eax, dword ptr [edx]
+sbb ebx, dword ptr [edx]
+sbb ecx, dword ptr [edx]
+sbb ebp, dword ptr [edx]
+sbb esi, dword ptr [edx]
+sbb edi, dword ptr [edx]
+sbb eax, dword ptr [ebp]
+sbb ebx, dword ptr [ebp]
+sbb ecx, dword ptr [ebp]
+sbb edx, dword ptr [ebp]
+sbb esi, dword ptr [ebp]
+sbb edi, dword ptr [ebp]
+sbb eax, dword ptr [esi]
+sbb ebx, dword ptr [esi]
+sbb ecx, dword ptr [esi]
+sbb edx, dword ptr [esi]
+sbb ebp, dword ptr [esi]
+sbb edi, dword ptr [esi]
+sbb eax, dword ptr [edi]
+sbb ebx, dword ptr [edi]
+sbb ecx, dword ptr [edi]
+sbb edx, dword ptr [edi]
+sbb ebp, dword ptr [edi]
+sbb esi, dword ptr [edi]
+classname xchg eax, ebx
+xchg eax, ebx
+classname xchg eax, ecx
+xchg eax, ecx
+classname xchg eax, edx
+xchg eax, edx
+classname xchg eax, ebp
+xchg eax, ebp
+classname xchg eax, esi
+xchg eax, esi
+classname xchg eax, edi
+xchg eax, edi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
