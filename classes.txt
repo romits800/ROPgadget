@@ -110,44 +110,44 @@ add ebx, dword ptr [eax]
 add ecx, dword ptr [eax]
 add edx, dword ptr [eax]
 add ebp, dword ptr [eax]
-add edi,  dword ptr [eax]
-add esi,  dword ptr [eax]
+add edi, dword ptr [eax]
+add esi, dword ptr [eax]
 add eax, dword ptr [ebx]
 add ecx, dword ptr [ebx]
 add edx, dword ptr [ebx]
 add ebp, dword ptr [ebx]
-add esi,  dword ptr [ebx]
-add edi,  dword ptr [ebx]
+add esi, dword ptr [ebx]
+add edi, dword ptr [ebx]
 add eax, dword ptr [ecx]
 add ebx, dword ptr [ecx]
 add edx, dword ptr [ecx]
 add ebp, dword ptr [ecx]
-add esi,  dword ptr [ecx]
-add edi,  dword ptr [ecx]
+add esi, dword ptr [ecx]
+add edi, dword ptr [ecx]
 add eax, dword ptr [edx]
 add ebx, dword ptr [edx]
 add ecx, dword ptr [edx]
 add ebp, dword ptr [edx]
-add esi,  dword ptr [edx]
-add edi,  dword ptr [edx]
+add esi, dword ptr [edx]
+add edi, dword ptr [edx]
 add eax, dword ptr [ebp]
 add ebx, dword ptr [ebp]
 add ecx, dword ptr [ebp]
 add edx, dword ptr [ebp]
-add esi,  dword ptr [ebp]
-add edi,  dword ptr [ebp]
+add esi, dword ptr [ebp]
+add edi, dword ptr [ebp]
 add eax, dword ptr [esi]
 add ebx, dword ptr [esi]
 add ecx, dword ptr [esi]
 add edx, dword ptr [esi]
-add ebp,  dword ptr [esi]
-add edi,  dword ptr [esi]
+add ebp, dword ptr [esi]
+add edi, dword ptr [esi]
 add eax, dword ptr [edi]
 add ebx, dword ptr [edi]
 add ecx, dword ptr [edi]
 add edx, dword ptr [edi]
-add ebp,  dword ptr [edi]
-add esi,  dword ptr [edi]
+add ebp, dword ptr [edi]
+add esi, dword ptr [edi]
 adc eax, ebx
 adc eax, ecx
 adc eax, edx
@@ -1239,6 +1239,12 @@ or dword ptr [edi], edx
 or dword ptr [edi], ebp 
 or dword ptr [edi], esi
 classname CF
+clc
+sahf
+aaa
+daa
+aas
+das
 add eax, ebx
 add eax, ecx
 add eax, edx
@@ -2560,7 +2566,6 @@ sbb ecx, dword ptr [edi]
 sbb edx, dword ptr [edi]
 sbb ebp, dword ptr [edi]
 sbb esi, dword ptr [edi]
-
 classname xchg eax, ebx
 xchg eax, ebx
 classname xchg eax, ecx

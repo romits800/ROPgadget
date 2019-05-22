@@ -107,7 +107,7 @@ class Core(cmd.Cmd):
     def __makingclasses(self):
         ##Read from the current file
         print ('making_classes')
-        single_byte_ins = ["leave","clc","aaa","sahf","daa","aas"]
+        single_byte_ins = ["leave","clc","aaa","sahf","daa","aas","das"]
         recursivedict=lambda:defaultdict(recursivedict)
         gadgetclasses=recursivedict()
         with codecs.open('classes.txt','r','utf-8') as fp:
@@ -123,7 +123,7 @@ class Core(cmd.Cmd):
                     instruction=instruction.split(',',1)
                     firstpart=instruction[0].strip()
                     opcode=firstpart.split(' ',1)[0]
-                    if opcode=="leave": # for single instructions with no operands
+                    if opcode in single_byte_ins: # for single instructions with no operands
                         try:
                             lists=gadgetclasses[opcode]
                         except:
