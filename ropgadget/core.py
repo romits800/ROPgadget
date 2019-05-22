@@ -132,7 +132,8 @@ class Core(cmd.Cmd):
                             if not lists:
                                 gadgetclasses[opcode]=[classname]
                             else:
-                                lists.append(classname)
+                                if classname not in lists:
+                                    lists.append(classname)
                         continue
 
                     operand1=firstpart.partition(' ')[2].strip()
@@ -149,7 +150,8 @@ class Core(cmd.Cmd):
                             if not lists:
                                 gadgetclasses[opcode][operand1][operand2]=[classname]
                             else:
-                                lists.append(classname)
+                                if classname not in lists:
+                                    lists.append(classname)
                     else: #for instructions with one operand
                         lists=[]
                         try:
@@ -160,7 +162,8 @@ class Core(cmd.Cmd):
                             if not lists:
                                 gadgetclasses[opcode][operand1]=[classname]
                             else:
-                                lists.append(classname)
+                                if classname not in lists:
+                                    lists.append(classname)
 
 
         gadgetclasses=self.__default_to_regular(gadgetclasses)
@@ -205,9 +208,9 @@ class Core(cmd.Cmd):
             insts = gadget["gadget"]
             bytes = gadget["bytes"]
             bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
-
-            single_ins = insts.split(' ; ')[:-1]
-            if(len(single_ins)==1):
+            splited_ins =  insts.split(' ; ')
+            single_ins = splited_ins[:-1]
+            if(len(single_ins)==1 and (splited_ins[-1][0]=='r')):
                 separated_ins  = single_ins[0].split(" ",1)
                 opcode = separated_ins[0]
                 if(len(separated_ins) == 2):
