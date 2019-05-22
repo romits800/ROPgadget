@@ -107,7 +107,7 @@ class Core(cmd.Cmd):
     def __makingclasses(self):
         ##Read from the current file
         print ('making_classes')
-        single_byte_ins = ["leave","clc","aaa","sahf","daa","aas","das"]
+        single_byte_ins = ["leave","clc","aaa","sahf","daa","aas","das","lahf"]
         recursivedict=lambda:defaultdict(recursivedict)
         gadgetclasses=recursivedict()
         with codecs.open('classes.txt','r','utf-8') as fp:
