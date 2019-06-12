@@ -66,7 +66,7 @@ architectures supported:
   ROPgadget.py --binary ./test-suite-binaries/Linux_lib64.so --offset 0xdeadbeef00000000
   ROPgadget.py --binary ./test-suite-binaries/elf-ARMv7-ls --depth 5
   ROPgadget.py --binary ./test-suite-binaries/elf-ARM64-bash --depth 5
-  ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --microgadgets
+  ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --microgadgets --depth 3 --nosys --nojop
   ROPgadget.py --binary ./test-suite-binaries/raw-x86.raw --rawArch=x86 --rawMode=32""")
 
         parser.add_argument("-v", "--version",      action="store_true",              help="Display the ROPgadget's version")
@@ -99,7 +99,7 @@ architectures supported:
         parser.add_argument("--fns2list",           type=str, metavar="<filename>",   help="Writes the gadgets per function out as a sorted json list")
         parser.add_argument("--fns2lines",          type=str, metavar="<filename>",   help="Writes the gadgets per function out line by line")
         parser.add_argument("--silent",             action="store_true",              help="Suppresses IO (used by client programs)")
-        parser.add_argument("--microgadgets",       action="store_true",              help="Specify a binary filename to analyze the microgadget classes it satisfies")
+        parser.add_argument("--microgadgets",       action="store_true",              help="Outpus all gadgets that satisfies turing complete classes set")
 
         self.__args = parser.parse_args(arguments)
 
