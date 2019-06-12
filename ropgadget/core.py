@@ -72,7 +72,6 @@ class Core(cmd.Cmd):
             return False
 
         G = Gadgets(self.__binary, self.__options, self.__offset)
-        print ('inside get gadgets')
         execSections = self.__binary.getExecSections()
 
         # Find ROP/JOP/SYS gadgets
@@ -106,7 +105,6 @@ class Core(cmd.Cmd):
 
     def __makingclasses(self):
         ##Read from the current file
-        print ('making_classes')
         single_byte_ins = ["leave","clc","aaa","sahf","daa","aas","das","lahf"]
         recursivedict=lambda:defaultdict(recursivedict)
         gadgetclasses=recursivedict()
@@ -237,7 +235,8 @@ class Core(cmd.Cmd):
                 print(("0x%08x" %(ins["addr"]) if ins["arch"] == CS_MODE_32 else "0x%016x" %(ins["addr"])) + " : %s" %(ins["ins"]))
 
     #    print class_ins.keys()
-        print len(class_ins.keys()), "Classes Satisfied"
+        
+        print "\n",len(class_ins.keys()), "Classes Satisfied"
         print("\nUnique gadgets found: %d" %(len(self.__gadgets)))
         return True
 
