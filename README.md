@@ -42,7 +42,7 @@ Usage
                         [--badbytes <byte>] [--rawArch <arch>] [--rawMode <mode>]
                         [--re <re>] [--offset <hexaddr>] [--ropchain] [--thumb]
                         [--console] [--norop] [--nojop] [--nosys] [--multibr]
-                        [--all] [--dump]
+                        [--all] [--dump] [--microgadgets]
 
     optional arguments:
         -h, --help           show this help message and exit
@@ -71,6 +71,7 @@ Usage
         --multibr            Enable multiple branch gadgets
         --all                Disables the removal of duplicate gadgets
         --dump               Outputs the gadget bytes
+        --microgadgets       Outputs all gadgets that satisfies turing complete classes set.
 
 
 How can I contribute ?
