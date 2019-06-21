@@ -54,6 +54,7 @@ setup(
     author_email     = "jonathan.salwan@gmail.com",
     url              = "https://github.com/JonathanSalwan/ROPgadget",
     scripts          = ['scripts/ROPgadget'],
+    include_package_data = True,
     classifiers      = [
         'Topic :: Security',
         'Environment :: Console',
