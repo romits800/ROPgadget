@@ -50,6 +50,7 @@ setup(
     description      = package_description,
     packages         = packages,
     license          = "BSD",
+    include_package_data = True,
     author           = "Jonathan Salwan",
     author_email     = "jonathan.salwan@gmail.com",
     url              = "https://github.com/JonathanSalwan/ROPgadget",
