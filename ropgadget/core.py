@@ -20,7 +20,19 @@ from ropgadget.options            import Options
 from ropgadget.ropchain.ropmaker  import ROPMaker
 from ropgadget.nm                 import Functions
 from collections import defaultdict
+
+
+def resolve_datafile(name):
+    """ returns the absolute path to the data file included in *this* directory.
+    """
+    path = os.path.join(os.path.dirname(__file__), name)
+    return path if os.path.exists(path) else None
+
+
 class Core(cmd.Cmd):
+
+    classes = resolve_datafile('classes.txt')
+    print classes
     def __init__(self, options):
         cmd.Cmd.__init__(self)
         self.__options   = options
@@ -105,18 +117,21 @@ class Core(cmd.Cmd):
 
     def __makingclasses(self):
         ##Read from the current file
+        if Core.classes is None:
+            print('classes.txt datafile not found, sorry.')
+            return
         single_byte_ins = ["leave","clc","aaa","sahf","daa","aas","das","lahf"]
         recursivedict=lambda:defaultdict(recursivedict)
         gadgetclasses=recursivedict()
-        with codecs.open('classes.txt','r','utf-8') as fp:
+        with codecs.open(Core.classes,'r','utf-8') as fp:
             for line in fp:
                 line.strip()
                 if not line:
                     break
                 if line.split(' ',1)[0]=="classname":
                    classname=line.split(' ',1)[1].strip()
-                else: 
-                    instruction=line 
+                else:
+                    instruction=line
                     instruction=instruction.strip()
                     instruction=instruction.split(',',1)
                     firstpart=instruction[0].strip()
@@ -184,7 +199,7 @@ class Core(cmd.Cmd):
             bytes = gadget["bytes"]
             bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
             print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(insts) + bytesStr)
-        #self.__makingclasses() 
+        #self.__makingclasses()
         print("\nUnique gadgets found: %d" %(len(self.__gadgets)))
         return True
 
@@ -197,7 +212,6 @@ class Core(cmd.Cmd):
         if self.__options.silent:
             return True
         classes = self.__makingclasses()
-    #    print classes
         class_ins = {}
         arch = self.__binary.getArchMode()
         print("Gadgets information\n============================================================")
@@ -215,27 +229,23 @@ class Core(cmd.Cmd):
                     arguments = separated_ins[1].split(", ")
                 elif(len(separated_ins)==1):
                     arguments = []
-                #    print arguments
                 try:
                     data = classes[opcode]
                     for i in arguments:
                         data = data[i]
-                   # print data
                     for j in data:
                         try:
                             class_ins[j].append({u'addr' : vaddr, u'ins' : insts + bytesStr,u'arch' : arch })
                         except:
                             class_ins[j] = [{u'addr' : vaddr, u'ins' : insts + bytesStr, u'arch':arch}]
                 except:
-                    #print "Error"
                     continue;
         for cls in class_ins.keys():
             print "\n===========================================================\n",cls, "\n==========================================================="
             for ins in class_ins[cls]:
                 print(("0x%08x" %(ins["addr"]) if ins["arch"] == CS_MODE_32 else "0x%016x" %(ins["addr"])) + " : %s" %(ins["ins"]))
 
-    #    print class_ins.keys()
-        
+
         print "\n",len(class_ins.keys()), "Classes Satisfied"
         print("\nUnique gadgets found: %d" %(len(self.__gadgets)))
         return True
