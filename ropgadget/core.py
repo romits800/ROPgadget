@@ -25,9 +25,10 @@ from collections import defaultdict
 def resolve_datafile(name):
     """ returns the absolute path to the data file included in *this* directory.
     """
+
     data="data/"
     path = os.path.join(os.path.dirname(__file__), data)
-    path=path+name 
+    path=path+name
     return path if os.path.exists(path) else None
 
 
