@@ -25,14 +25,15 @@ from collections import defaultdict
 def resolve_datafile(name):
     """ returns the absolute path to the data file included in *this* directory.
     """
-    path = os.path.join(os.path.dirname(__file__), name)
+    data="data/"
+    path = os.path.join(os.path.dirname(__file__), data)
+    path=path+name 
     return path if os.path.exists(path) else None
 
 
 class Core(cmd.Cmd):
 
     classes = resolve_datafile('classes.txt')
-    print classes
     def __init__(self, options):
         cmd.Cmd.__init__(self)
         self.__options   = options
