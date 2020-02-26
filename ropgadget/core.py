@@ -12,7 +12,6 @@ import re
 import codecs
 import ropgadget.rgutils as rgutils
 import sqlite3
-import binascii
 
 from ropgadget.binary             import Binary
 from capstone                     import CS_MODE_32
@@ -47,7 +46,7 @@ class Core(cmd.Cmd):
 
 
     def __checksBeforeManipulations(self):
-        if self.__binary == None or self.__binary.getBinary() == None or self.__binary.getArch() == None or self.__binary.getArchMode() == None:
+        if self.__binary == None or self.__binary.getBinary() == None or self.__binary.getArch() == None or self.__binary.getArchMode() == None or self.__binary.getEndian() == None:
             return False
         return True
 
@@ -200,7 +199,7 @@ class Core(cmd.Cmd):
             vaddr = gadget["vaddr"]
             insts=  gadget["gadget"]
             bytes = gadget["bytes"]
-            bytesStr = " // " + binascii.hexlify(bytes).decode('utf8') if self.__options.dump else ""
+            bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
 
             print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(insts) + bytesStr)
         #self.__makingclasses()
@@ -641,6 +640,7 @@ class Core(cmd.Cmd):
         print("Range:       %s" %(self.__options.range))
         print("RawArch:     %s" %(self.__options.rawArch))
         print("RawMode:     %s" %(self.__options.rawMode))
+        print("RawEndian:   %s" %(self.__options.rawEndian))
         print("Re:          %s" %(self.__options.re))
         print("String:      %s" %(self.__options.string))
         print("Thumb:       %s" %(self.__options.thumb))
