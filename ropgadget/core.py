@@ -1,10 +1,10 @@
 ## -*- coding: utf-8 -*-
 ##
 ##  Jonathan Salwan - 2014-05-17 - ROPgadget tool
-##
+## 
 ##  http://twitter.com/JonathanSalwan
 ##  http://shell-storm.org/project/ROPgadget/
-##
+## 
 
 import cmd
 import os
@@ -12,7 +12,6 @@ import re
 import codecs
 import ropgadget.rgutils as rgutils
 import sqlite3
-import binascii
 
 from ropgadget.binary             import Binary
 from capstone                     import CS_MODE_32
@@ -31,42 +30,13 @@ class Core(cmd.Cmd):
 
 
     def __checksBeforeManipulations(self):
-        if self.__binary == None or self.__binary.getBinary() == None or self.__binary.getArch() == None or self.__binary.getArchMode() == None or self.__binary.getEndian() == None:
+        if self.__binary == None or self.__binary.getBinary() == None or self.__binary.getArch() == None or self.__binary.getArchMode() == None:
             return False
         return True
 
-    def _sectionInRange(self, section):
-        """
-        given a section and a range, edit the section so that all opcodes are within the range
-        """
-        if self.__options.range == "0x0-0x0":
-            return section
 
-        rangeStart, rangeEnd = map(lambda x:int(x, 16), self.__options.range.split('-'))
+    def __getAllgadgets(self):
 
-        sectionStart = section['vaddr']
-        sectionEnd = sectionStart + section['size']
-
-        opcodes = section['opcodes']
-        if rangeEnd < sectionStart or rangeStart > sectionEnd:
-            return None
-        if rangeStart > sectionStart:
-            diff = rangeStart - sectionStart
-            opcodes = opcodes[diff:]
-            section['vaddr'] += diff
-            section['offset'] += diff
-            section['size'] -= diff
-        if rangeEnd < sectionEnd:
-            diff = sectionEnd - rangeEnd
-            opcodes = opcodes[:-diff]
-            section['size'] -= diff
-
-        if not section['size']:
-            return None
-        section['opcodes'] = opcodes
-        return section
-
-    def __getGadgets(self):
         if self.__checksBeforeManipulations() == False:
             return False
 
@@ -76,22 +46,22 @@ class Core(cmd.Cmd):
         # Find ROP/JOP/SYS gadgets
         self.__gadgets = []
         for section in execSections:
-            section = self._sectionInRange(section)
-            if not section: continue
             if not self.__options.norop: self.__gadgets += G.addROPGadgets(section)
             if not self.__options.nojop: self.__gadgets += G.addJOPGadgets(section)
             if not self.__options.nosys: self.__gadgets += G.addSYSGadgets(section)
 
+        # Pass clean single instruction and unknown instructions
+        self.__gadgets = G.passClean(self.__gadgets, self.__options.multibr)
+
         # Delete duplicate gadgets
-        if not self.__options.all and not self.__options.noinstr:
+        if not self.__options.all:
             self.__gadgets = rgutils.deleteDuplicateGadgets(self.__gadgets)
 
         # Applicate some Options
         self.__gadgets = Options(self.__options, self.__binary, self.__gadgets).getGadgets()
 
         # Sorted alphabetically
-        if not self.__options.noinstr:
-            self.__gadgets = rgutils.alphaSortgadgets(self.__gadgets)
+        self.__gadgets = rgutils.alphaSortgadgets(self.__gadgets)
 
         return True
 
@@ -101,18 +71,15 @@ class Core(cmd.Cmd):
         if self.__checksBeforeManipulations() == False:
             return False
 
-        if self.__options.silent:
-            return True
-
         arch = self.__binary.getArchMode()
         print("Gadgets information\n============================================================")
         for gadget in self.__gadgets:
             vaddr = gadget["vaddr"]
-            insts = gadget.get("gadget", "")
-            bytesStr = " // " + binascii.hexlify(gadget["bytes"]).decode('utf8') if self.__options.dump else ""
+            insts = gadget["gadget"]
+            bytes = gadget["bytes"]
+            bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
 
-            print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) +
-                  (" : %s" %(insts) if insts else "") + bytesStr)
+            print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(insts) + bytesStr)
 
         print("\nUnique gadgets found: %d" %(len(self.__gadgets)))
         return True
@@ -123,51 +90,44 @@ class Core(cmd.Cmd):
         if self.__checksBeforeManipulations() == False:
             return False
 
-        if self.__options.silent:
-            return True
-
         dataSections = self.__binary.getDataSections()
         arch = self.__binary.getArchMode()
         print("Strings information\n============================================================")
         for section in dataSections:
-            section = self._sectionInRange(section)
-            if not section: continue
-            allRef = [m.start() for m in re.finditer(string.encode(), section["opcodes"])]
+            allRef = [m.start() for m in re.finditer(string, section["opcodes"])]
             for ref in allRef:
                 vaddr  = self.__offset + section["vaddr"] + ref
-                match = section["opcodes"][ref:ref+len(string)]
-                print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(match.decode()))
+                string = section["opcodes"][ref:ref+len(string)]
+                rangeS = int(self.__options.range.split('-')[0], 16)
+                rangeE = int(self.__options.range.split('-')[1], 16)
+                if (rangeS == 0 and rangeE == 0) or (vaddr >= rangeS and vaddr <= rangeE):
+                    print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(string))
         return True
 
 
     def __lookingForOpcodes(self, opcodes):
-        import binascii
 
         if self.__checksBeforeManipulations() == False:
             return False
-
-        if self.__options.silent:
-            return True
 
         execSections = self.__binary.getExecSections()
         arch = self.__binary.getArchMode()
         print("Opcodes information\n============================================================")
         for section in execSections:
-            section = self._sectionInRange(section)
-            if not section: continue
-            allRef = [m.start() for m in re.finditer(re.escape(binascii.unhexlify(opcodes)), section["opcodes"])]
+            allRef = [m.start() for m in re.finditer(re.escape(opcodes.decode("hex")), section["opcodes"])]
             for ref in allRef:
                 vaddr  = self.__offset + section["vaddr"] + ref
-                print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(opcodes))
+                rangeS = int(self.__options.range.split('-')[0], 16)
+                rangeE = int(self.__options.range.split('-')[1], 16)
+                if (rangeS == 0 and rangeE == 0) or (vaddr >= rangeS and vaddr <= rangeE):
+                    print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(opcodes))
         return True
 
 
     def __lookingForMemStr(self, memstr):
+
         if self.__checksBeforeManipulations() == False:
             return False
-
-        if self.__options.silent:
-            return True
 
         sections  = self.__binary.getExecSections()
         sections += self.__binary.getDataSections()
@@ -177,13 +137,14 @@ class Core(cmd.Cmd):
         for char in chars:
             try:
                 for section in sections:
-                    section = self._sectionInRange(section)
-                    if not section: continue
-                    allRef = [m.start() for m in re.finditer(char.encode('utf-8'), section["opcodes"])]
+                    allRef = [m.start() for m in re.finditer(char, section["opcodes"])]
                     for ref in allRef:
                         vaddr  = self.__offset + section["vaddr"] + ref
-                        print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : '%c'" %(char))
-                        raise
+                        rangeS = int(self.__options.range.split('-')[0], 16)
+                        rangeE = int(self.__options.range.split('-')[1], 16)
+                        if (rangeS == 0 and rangeE == 0) or (vaddr >= rangeS and vaddr <= rangeE):
+                            print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : '%c'" %(char))
+                            raise
             except:
                 pass
         return True
@@ -212,8 +173,8 @@ class Core(cmd.Cmd):
         if   self.__options.string:   return self.__lookingForAString(self.__options.string)
         elif self.__options.opcode:   return self.__lookingForOpcodes(self.__options.opcode)
         elif self.__options.memstr:   return self.__lookingForMemStr(self.__options.memstr)
-        else:
-            self.__getGadgets()
+        else: 
+            self.__getAllgadgets()
             self.__lookingForGadgets()
             if self.__options.ropchain:
                 ROPMaker(self.__binary, self.__gadgets, self.__offset)
@@ -229,7 +190,7 @@ class Core(cmd.Cmd):
     # Console methods  ============================================
 
     def do_binary(self, s, silent=False):
-        # Do not split the filename with spaces since it might contain
+        # Do not split the filename with spaces since it might contain 
         # whitespaces
         if len(s) == 0:
             if not silent:
@@ -273,12 +234,12 @@ class Core(cmd.Cmd):
 
         if not silent:
             print("[+] Loading gadgets, please wait...")
-        self.__getGadgets()
+        self.__getAllgadgets()
 
         if not silent:
             print("[+] Gadgets loaded !")
 
-
+        
     def help_load(self):
         print("Syntax: load -- Load all gadgets")
         return False
@@ -341,7 +302,7 @@ class Core(cmd.Cmd):
             if a not in gadget:
                 return False
         return True
-
+        
     def __withoutK(self, listK, gadget):
         for a in listK:
             if a in gadget:
@@ -374,7 +335,7 @@ class Core(cmd.Cmd):
     def help_search(self):
         print("Syntax: search <keyword1 keyword2 keyword3...> -- Filter with or without keywords")
         print("keyword  = with")
-        print("!keyword = without")
+        print("!keyword = witout")
         return False
 
 
@@ -404,7 +365,7 @@ class Core(cmd.Cmd):
 
 
     def help_filter(self):
-        print("Syntax: filter <filter1|filter2|...> - Suppress specific mnemonics")
+        print("Syntax: filter <filter1|filter2|...> - Suppress specific instructions")
         return False
 
 
@@ -470,7 +431,6 @@ class Core(cmd.Cmd):
         print("Range:       %s" %(self.__options.range))
         print("RawArch:     %s" %(self.__options.rawArch))
         print("RawMode:     %s" %(self.__options.rawMode))
-        print("RawEndian:   %s" %(self.__options.rawEndian))
         print("Re:          %s" %(self.__options.re))
         print("String:      %s" %(self.__options.string))
         print("Thumb:       %s" %(self.__options.thumb))

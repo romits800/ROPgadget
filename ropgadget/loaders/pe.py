@@ -1,10 +1,10 @@
 ## -*- coding: utf-8 -*-
 ##
 ##  Jonathan Salwan - 2014-05-12 - ROPgadget tool
-##
+## 
 ##  http://twitter.com/JonathanSalwan
 ##  http://shell-storm.org/project/ROPgadget/
-##
+## 
 
 from capstone   import *
 from ctypes     import *
@@ -148,7 +148,7 @@ class PE(object):
         if self.__binary[self.__PEOffset:self.__PEOffset+4] != unhexlify(b"50450000"):
             print("[Error] PE.__getPEOffset() - Bad PE signature")
             return None
-
+ 
     def __parsePEHeader(self):
         PEheader = self.__binary[self.__PEOffset:]
         self.__IMAGE_FILE_HEADER = IMAGE_FILE_HEADER.from_buffer_copy(PEheader)
@@ -176,7 +176,7 @@ class PE(object):
             base = base[sizeof(IMAGE_SECTION_HEADER):]
             self.__sections_l += [sec]
 
-        return 0
+        return 0              
 
     def getEntryPoint(self):
         return self.__IMAGE_OPTIONAL_HEADER.ImageBase + self.__IMAGE_OPTIONAL_HEADER.AddressOfEntryPoint
@@ -190,7 +190,7 @@ class PE(object):
                             "offset"  : section.PointerToRawData,
                             "size"    : section.SizeOfRawData,
                             "vaddr"   : section.VirtualAddress + self.__IMAGE_OPTIONAL_HEADER.ImageBase,
-                            "opcodes" : bytes(self.__binary[section.PointerToRawData:section.PointerToRawData+section.SizeOfRawData])
+                            "opcodes" : str(self.__binary[section.PointerToRawData:section.PointerToRawData+section.SizeOfRawData])
                         }]
         return ret
 
@@ -225,9 +225,6 @@ class PE(object):
             print("[Error] PE.getArch() - Bad arch size")
             return None
 
-    def getEndian(self):
-        # PE is little-endian only
-        return 0
-
     def getFormat(self):
         return "PE"
+

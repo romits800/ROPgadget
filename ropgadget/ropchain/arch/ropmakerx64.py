@@ -174,7 +174,7 @@ class ROPMakerX64(object):
 
         xorRax = self.__lookingForSomeThing("xor rax, rax")
         if not xorRax:
-            print("\t[-] Can't find the 'xor rax, rax' instruction")
+            print("\t[-] Can't find the 'xor rax, rax' instuction")
             return
 
         incRax = self.__lookingForSomeThing("inc rax")
@@ -187,7 +187,7 @@ class ROPMakerX64(object):
         instr = [incRax, incEax, incAx, addRax, addEax, addAx]
 
         if all(v is None for v in instr):
-            print("\t[-] Can't find the 'inc rax' or 'add rax, 1' instruction")
+            print("\t[-] Can't find the 'inc rax' or 'add rax, 1' instuction")
             return
 
         for i in instr:

@@ -15,75 +15,87 @@ class Gadgets(object):
         self.__binary  = binary
         self.__options = options
         self.__offset  = offset
-        self.__arch = self.__binary.getArch()
 
-        re_str = ""
-        if self.__arch == CS_ARCH_X86:
-            re_str = "db|int3"
-        elif self.__arch == CS_ARCH_ARM64:
-            re_str = "brk|smc|hvc"
-        if self.__options.filter:
-            if re_str:
-                re_str += "|"
-            re_str += self.__options.filter
 
-        self.__filterRE = re.compile("({})$".format(re_str)) if re_str else None
-
-    def __passCleanX86(self, decodes):
-        br = ["ret", "retf", "int", "sysenter", "jmp", "call", "syscall"]
-
-        if decodes[-1][2] not in br:
-            return True
-        if not self.__options.multibr and any(mnemonic in br for _, _, mnemonic, _ in decodes[:-1]):
-            return True
-        if any("ret" in mnemonic for _, _, mnemonic, _ in decodes[:-1]):
-            return True
-
+    def __checkInstructionBlackListedX86(self, insts):
+        bl = ["db", "int3"]
+        for inst in insts:
+            for b in bl:
+                if inst.split(" ")[0] == b:
+                    return True
         return False
+
+    def __checkMultiBr(self, insts, br):
+        count = 0
+        for inst in insts:
+            if inst.split()[0] in br:
+                count += 1
+        return count
+
+    def __passCleanX86(self, gadgets, multibr=False):
+        new = []
+        br = ["ret", "retf", "int", "sysenter", "jmp", "call", "syscall"]
+        for gadget in gadgets:
+            insts = gadget["gadget"].split(" ; ")
+            if len(insts) == 1 and insts[0].split(" ")[0] not in br:
+                continue
+            if insts[-1].split(" ")[0] not in br:
+                continue
+            if self.__checkInstructionBlackListedX86(insts):
+                continue
+            if not multibr and self.__checkMultiBr(insts, br) > 1:
+                continue
+            if len([m.start() for m in re.finditer("ret", gadget["gadget"])]) > 1:
+                continue
+            new += [gadget]
+        return new
+
+    def __passCleanArm64(self, gadgets, multibr=False):
+        new = []
+        bl = ["brk", "smc", "hvc"]
+        for gadget in gadgets:
+            insts = gadget["gadget"].split(" ; ")
+            isbl = False;
+            for inst in insts:
+                if inst.split(" ")[0] in bl:
+                    isbl = True;
+            if isbl:
+                continue
+            new += [gadget]
+        return new
 
     def __gadgetsFinding(self, section, gadgets, arch, mode):
 
+        C_OP    = 0
+        C_SIZE  = 1
+        C_ALIGN = 2
         PREV_BYTES = 9 # Number of bytes prior to the gadget to store.
-
-        opcodes = section["opcodes"]
-        sec_vaddr = section["vaddr"]
-
         ret = []
         md = Cs(arch, mode)
-        for gad_op, gad_size, gad_align in gadgets:
-            allRefRet = [m.start() for m in re.finditer(gad_op, opcodes)]
+        for gad in gadgets:
+            allRefRet = [m.start() for m in re.finditer(gad[C_OP], section["opcodes"])]
             for ref in allRefRet:
-                end = ref + gad_size
                 for i in range(self.__options.depth):
-                    start = ref - (i * gad_align)
-                    if (sec_vaddr+start) % gad_align == 0:
-                        code = opcodes[start:end]
-                        decodes = md.disasm_lite(code, sec_vaddr+ref)
-                        decodes = list(decodes)
-                        if sum(size for _, size, _, _ in decodes) != i*gad_align + gad_size:
-                            # We've read less instructions than planned so something went wrong
-                            continue
-                        if self.passClean(decodes):
-                            continue
-                        off = self.__offset
-                        vaddr = off+sec_vaddr+start
-                        g = {"vaddr" :  vaddr}
-                        if not self.__options.noinstr:
-                            g["gadget"] = " ; ".join("{}{}{}".format(mnemonic, " " if op_str else "", op_str)
-                                                     for _, _, mnemonic, op_str in decodes).replace("  ", " ")
-                        if self.__options.callPreceded:
-                            prevBytesAddr = max(sec_vaddr, vaddr - PREV_BYTES)
-                            g["prev"] = opcodes[prevBytesAddr-sec_vaddr:vaddr-sec_vaddr]
-                        if self.__options.dump:
-                            g["bytes"] = code
-                        ret.append(g)
+                    if (section["vaddr"]+ref-(i*gad[C_ALIGN])) % gad[C_ALIGN] == 0:
+                        decodes = md.disasm(section["opcodes"][ref-(i*gad[C_ALIGN]):ref+gad[C_SIZE]], section["vaddr"]+ref)
+                        gadget = ""
+                        for decode in decodes:
+                            gadget += (decode.mnemonic + " " + decode.op_str + " ; ").replace("  ", " ")
+                        if re.search(gad[C_OP],decode.bytes) is None:
+                                continue
+                        if len(gadget) > 0:
+                            gadget = gadget[:-3]
+                            off = self.__offset
+                            vaddr = off+section["vaddr"]+ref-(i*gad[C_ALIGN])
+                            prevBytesAddr = max(section["vaddr"], vaddr - PREV_BYTES)
+                            prevBytes = section["opcodes"][prevBytesAddr-section["vaddr"]:vaddr-section["vaddr"]]
+                            ret += [{"vaddr" :  vaddr, "gadget" : gadget, "decodes" : decodes, "bytes": section["opcodes"][ref-(i*gad[C_ALIGN]):ref+gad[C_SIZE]], "prev": prevBytes}]
         return ret
 
     def addROPGadgets(self, section):
 
         arch = self.__binary.getArch()
         arch_mode = self.__binary.getArchMode()
-        arch_endian = self.__binary.getEndian()
 
         if arch == CS_ARCH_X86:
             gadgets = [
@@ -98,40 +110,24 @@ class Gadgets(object):
 
         elif arch == CS_ARCH_MIPS:   gadgets = []            # MIPS doesn't contains RET instruction set. Only JOP gadgets
         elif arch == CS_ARCH_PPC:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
-                               [b"\x4e\x80\x00\x20", 4, 4] # blr
-                          ]
-            else:
-                gadgets = [
-                               [b"\x20\x00\x80\x4e", 4, 4] # blr
-                          ]
+            gadgets = [
+                            [b"\x4e\x80\x00\x20", 4, 4] # blr
+                       ]
+            arch_mode = arch_mode + CS_MODE_BIG_ENDIAN
 
         elif arch == CS_ARCH_SPARC:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
-                               [b"\x81\xc3\xe0\x08", 4, 4], # retl
-                               [b"\x81\xc7\xe0\x08", 4, 4], # ret
-                               [b"\x81\xe8\x00\x00", 4, 4]  # restore
-                          ]
-            else:
-                gadgets = [
-                               [b"\x08\xe0\xc3\x81", 4, 4], # retl
-                               [b"\x08\xe0\xc7\x81", 4, 4], # ret
-                               [b"\x00\x00\xe8\x81", 4, 4]  # restore
-                          ]
-            arch_mode = 0
+            gadgets = [
+                            [b"\x81\xc3\xe0\x08", 4, 4], # retl
+                            [b"\x81\xc7\xe0\x08", 4, 4], # ret
+                            [b"\x81\xe8\x00\x00", 4, 4]  # restore
+                       ]
+            arch_mode = CS_MODE_BIG_ENDIAN
 
         elif arch == CS_ARCH_ARM:    gadgets = []            # ARM doesn't contains RET instruction set. Only JOP gadgets
         elif arch == CS_ARCH_ARM64:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
-                               [b"\xd6\x5f\x03\xc0", 4, 4] # ret
-                          ]
-            else:
-                gadgets = [
-                               [b"\xc0\x03\x5f\xd6", 4, 4] # ret
-                          ]
+            gadgets =  [
+                            [b"\xc0\x03\x5f\xd6", 4, 4] # ret
+                       ]
             arch_mode = CS_MODE_ARM
 
         else:
@@ -139,14 +135,13 @@ class Gadgets(object):
             return None
 
         if len(gadgets) > 0 :
-            return self.__gadgetsFinding(section, gadgets, arch, arch_mode + arch_endian)
+            return self.__gadgetsFinding(section, gadgets, arch, arch_mode)
         return gadgets
 
 
     def addJOPGadgets(self, section):
         arch = self.__binary.getArch()
         arch_mode = self.__binary.getArchMode()
-        arch_endian = self.__binary.getEndian()
 
 
 
@@ -156,8 +151,6 @@ class Gadgets(object):
                                [b"\xff[\xe0\xe1\xe2\xe3\xe4\xe6\xe7]{1}", 2, 1], # jmp  [reg]
                                [b"\xff[\x10\x11\x12\x13\x16\x17]{1}", 2, 1],     # jmp  [reg]
                                [b"\xff[\xd0\xd1\xd2\xd3\xd4\xd6\xd7]{1}", 2, 1],  # call [reg]
-                               [b"\xeb[\x00-\xff]", 2, 1],                        # jmp offset
-                               [b"\xe9[\x00-\xff]{4}", 5, 1],                     # jmp offset
                                # MPX
                                [b"\xf2\xff[\x20\x21\x22\x23\x26\x27]{1}", 3, 1],     # jmp  [reg]
                                [b"\xf2\xff[\xe0\xe1\xe2\xe3\xe4\xe6\xe7]{1}", 3, 1], # jmp  [reg]
@@ -167,93 +160,50 @@ class Gadgets(object):
 
 
         elif arch == CS_ARCH_MIPS:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
-                               [b"\x00[\x40\x60\x80\xa0\xc0\xe0]\xf8\x09[\x00-\xff]{4}", 8, 4],               # jalr $v[0-1]|$a[0-3]
-                               [b"[\x01\x02][\x00\x20\x40\x60\x80\xa0\xc0\xe0]\xf8\x09[\x00-\xff]{4}", 8, 4], # jalr $t[0-7]|$s[0-7]
-                               [b"\x03[\x00\x20\xc0\xe0]\xf8\x09[\x00-\xff]{4}", 8, 4],                       # jalr $t[8-9]|$s8|$ra
-                               [b"\x00[\x40\x60\x80\xa0\xc0\xe0]\x00\x08[\x00-\xff]{4}", 8, 4],               # jr $v[0-1]|$a[0-3]
-                               [b"[\x01\x02][\x00\x20\x40\x60\x80\xa0\xc0\xe0]\x00\x08[\x00-\xff]{4}", 8, 4], # jr $t[0-7]|$s[0-7]
-                               [b"\x03[\x00\x20\xc0\xe0]\x00\x08[\x00-\xff]{4}", 8, 4],                       # jr $t[8-9]|$s8|$ra
-                               [b"[\x0c-\x0f][\x00-\xff]{7}", 8, 4],                                          # jal addr
-                               [b"[\x08-\x0b][\x00-\xff]{7}", 8, 4]                                           # j addr
-                          ]
-            else:
-                gadgets = [
-                               [b"\x09\xf8[\x40\x60\x80\xa0\xc0\xe0]\x00[\x00-\xff]{4}", 8, 4],               # jalr $v[0-1]|$a[0-3]
-                               [b"\x09\xf8[\x00\x20\x40\x60\x80\xa0\xc0\xe0][\x01\x02][\x00-\xff]{4}", 8, 4], # jalr $t[0-7]|$s[0-7]
-                               [b"\x09\xf8[\x00\x20\xc0\xe0]\x03[\x00-\xff]{4}", 8, 4],                       # jalr $t[8-9]|$s8|$ra
-                               [b"\x08\x00[\x40\x60\x80\xa0\xc0\xe0]\x00[\x00-\xff]{4}", 8, 4],               # jr $v[0-1]|$a[0-3]
-                               [b"\x08\x00[\x00\x20\x40\x60\x80\xa0\xc0\xe0][\x01\x02][\x00-\xff]{4}", 8, 4], # jr $t[0-7]|$s[0-7]
-                               [b"\x08\x00[\x00\x20\xc0\xe0]\x03[\x00-\xff]{4}", 8, 4],                       # jr $t[8-9]|$s8|$ra
-                               [b"[\x00-\xff]{3}[\x0c-\x0f][\x00-\xff]{4}", 8, 4],                            # jal addr
-                               [b"[\x00-\xff]{3}[\x08-\x0b][\x00-\xff]{4}", 8, 4]                             # j addr
-                          ]
+            gadgets = [
+                               [b"\x09\xf8\x20\x03[\x00-\xff]{4}", 8, 4], # jrl $t9
+                               [b"\x08\x00\x20\x03[\x00-\xff]{4}", 8, 4], # jr  $t9
+                               [b"\x08\x00\xe0\x03[\x00-\xff]{4}", 8, 4]  # jr  $ra
+                      ]
         elif arch == CS_ARCH_PPC:    gadgets = [] # PPC architecture doesn't contains reg branch instruction
         elif arch == CS_ARCH_SPARC:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
+            gadgets = [
                                [b"\x81\xc0[\x00\x40\x80\xc0]{1}\x00", 4, 4]  # jmp %g[0-3]
-                          ]
-            else:
-                gadgets = [
-                               [b"\x00[\x00\x40\x80\xc0]{1}\xc0\x81", 4, 4]  # jmp %g[0-3]
-                          ]
-            arch_mode = 0
+                      ]
+            arch_mode = CS_MODE_BIG_ENDIAN
         elif arch == CS_ARCH_ARM64:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
-                               [b"\xd6[\x1f\x5f]{1}[\x00-\x03]{1}[\x00\x20\x40\x60\x80\xa0\xc0\xe0]{1}", 4, 4],  # br reg
-                               [b"\xd6\?[\x00-\x03]{1}[\x00\x20\x40\x60\x80\xa0\xc0\xe0]{1}", 4, 4]  # blr reg
-                          ]
-            else:
-                gadgets = [
+            gadgets = [
                                [b"[\x00\x20\x40\x60\x80\xa0\xc0\xe0]{1}[\x00-\x03]{1}[\x1f\x5f]{1}\xd6", 4, 4],  # br reg
                                [b"[\x00\x20\x40\x60\x80\xa0\xc0\xe0]{1}[\x00-\x03]{1}\?\xd6", 4, 4]  # blr reg
-                          ]
+                      ]
             arch_mode = CS_MODE_ARM
         elif arch == CS_ARCH_ARM:
             if self.__options.thumb or self.__options.rawMode == "thumb":
-                if arch_endian == CS_MODE_BIG_ENDIAN:
-                    gadgets = [
-                               [b"\x47[\x00\x08\x10\x18\x20\x28\x30\x38\x40\x48\x70]{1}", 2, 2], # bx   reg
-                               [b"\x47[\x80\x88\x90\x98\xa0\xa8\xb0\xb8\xc0\xc8\xf0]{1}", 2, 2], # blx  reg
-                               [b"\xbd[\x00-\xff]{1}", 2, 2]                                     # pop {,pc}
-                              ]
-                else:
-                    gadgets = [
+                gadgets = [
                                [b"[\x00\x08\x10\x18\x20\x28\x30\x38\x40\x48\x70]{1}\x47", 2, 2], # bx   reg
                                [b"[\x80\x88\x90\x98\xa0\xa8\xb0\xb8\xc0\xc8\xf0]{1}\x47", 2, 2], # blx  reg
                                [b"[\x00-\xff]{1}\xbd", 2, 2]                                     # pop {,pc}
-                              ]
+                          ]
                 arch_mode = CS_MODE_THUMB
             else:
-                if arch_endian == CS_MODE_BIG_ENDIAN:
-                    gadgets = [
-                               [b"\xe1\x2f\xff[\x10-\x19\x1e]{1}", 4, 4],  # bx   reg
-                               [b"\xe1\x2f\xff[\x30-\x39\x3e]{1}", 4, 4],  # blx  reg
-                               [b"[\xe8\xe9][\x10-\x1e\x30-\x3e\x50-\x5e\x70-\x7e\x90-\x9e\xb0-\xbe\xd0-\xde\xf0-\xfe][\x80-\xff][\x00-\xff]", 4, 4] # ldm {,pc}
-                              ]
-                else:
-                    gadgets = [
+                gadgets = [
                                [b"[\x10-\x19\x1e]{1}\xff\x2f\xe1", 4, 4],  # bx   reg
                                [b"[\x30-\x39\x3e]{1}\xff\x2f\xe1", 4, 4],  # blx  reg
                                [b"[\x00-\xff][\x80-\xff][\x10-\x1e\x30-\x3e\x50-\x5e\x70-\x7e\x90-\x9e\xb0-\xbe\xd0-\xde\xf0-\xfe][\xe8\xe9]", 4, 4] # ldm {,pc}
-                              ]
+                          ]
                 arch_mode = CS_MODE_ARM
         else:
             print("Gadgets().addJOPGadgets() - Architecture not supported")
             return None
 
         if len(gadgets) > 0 :
-            return self.__gadgetsFinding(section, gadgets, arch, arch_mode + arch_endian)
+            return self.__gadgetsFinding(section, gadgets, arch, arch_mode)
         return gadgets
 
     def addSYSGadgets(self, section):
 
         arch = self.__binary.getArch()
         arch_mode = self.__binary.getArchMode()
-        arch_endian = self.__binary.getEndian()
 
         if   arch == CS_ARCH_X86:
             gadgets = [
@@ -268,26 +218,21 @@ class Gadgets(object):
                       ]
 
         elif arch == CS_ARCH_MIPS:
-            if arch_endian == CS_MODE_BIG_ENDIAN:
-                gadgets = [
-                               [b"\x00\x00\x00\x0c", 4, 4] # syscall
-                          ]
-            else:
-                gadgets = [
+            gadgets = [
                                [b"\x0c\x00\x00\x00", 4, 4] # syscall
-                          ]
+                      ]
         elif arch == CS_ARCH_PPC:    gadgets = [] # TODO (sc inst)
         elif arch == CS_ARCH_SPARC:  gadgets = [] # TODO (ta inst)
         elif arch == CS_ARCH_ARM64:  gadgets = [] # TODO
         elif arch == CS_ARCH_ARM:
             if self.__options.thumb or self.__options.rawMode == "thumb":
                 gadgets = [
-                               [b"\x00-\xff]{1}\xef", 2, 2] # FIXME: svc
+                               [b"\x00-\xff]{1}\xef", 2, 2] # svc
                           ]
                 arch_mode = CS_MODE_THUMB
             else:
                 gadgets = [
-                               [b"\x00-\xff]{3}\xef", 4, 4] # FIXME: svc
+                               [b"\x00-\xff]{3}\xef", 4, 4] # svc
                           ]
                 arch_mode = CS_MODE_ARM
         else:
@@ -295,20 +240,20 @@ class Gadgets(object):
             return None
 
         if len(gadgets) > 0 :
-            return self.__gadgetsFinding(section, gadgets, arch, arch_mode + arch_endian)
+            return self.__gadgetsFinding(section, gadgets, arch, arch_mode)
         return []
 
 
-    def passClean(self, decodes):
+    def passClean(self, gadgets, multibr):
 
-        if not decodes:
-            return True
-
-        if self.__arch == CS_ARCH_X86 and self.__passCleanX86(decodes):
-            return True
-
-        if self.__filterRE and any(self.__filterRE.match(mnemonic) for _, _, mnemonic, _ in decodes):
-            return True
-
-        return False
+        arch = self.__binary.getArch()
+        if   arch == CS_ARCH_X86:    return self.__passCleanX86(gadgets, multibr)
+        elif arch == CS_ARCH_MIPS:   return gadgets
+        elif arch == CS_ARCH_PPC:    return gadgets
+        elif arch == CS_ARCH_SPARC:  return gadgets
+        elif arch == CS_ARCH_ARM:    return gadgets
+        elif arch == CS_ARCH_ARM64:  return self.__passCleanArm64(gadgets, multibr)
+        else:
+            print("Gadgets().passClean() - Architecture not supported")
+            return None
 
