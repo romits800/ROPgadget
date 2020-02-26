@@ -23,4 +23,4 @@ def main():
     import sys
     from   ropgadget.args import Args
     from   ropgadget.core import Core
-    sys.exit(0 if Core(Args().getArgs()).analyze() else 1)
+    sys.exit(Core(Args().getArgs()).analyze())
