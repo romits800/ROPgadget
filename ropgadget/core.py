@@ -12,6 +12,7 @@ import re
 import codecs
 import ropgadget.rgutils as rgutils
 import sqlite3
+import binascii
 
 from ropgadget.binary             import Binary
 from capstone                     import CS_MODE_32
@@ -46,7 +47,7 @@ class Core(cmd.Cmd):
 
 
     def __checksBeforeManipulations(self):
-        if self.__binary == None or self.__binary.getBinary() == None or self.__binary.getArch() == None or self.__binary.getArchMode() == None:
+        if self.__binary == None or self.__binary.getBinary() == None or self.__binary.getArch() == None or self.__binary.getArchMode() == None or self.__binary.getEndian() == None:
             return False
         return True
 
@@ -97,18 +98,16 @@ class Core(cmd.Cmd):
             if not self.__options.nojop: self.__gadgets += G.addJOPGadgets(section)
             if not self.__options.nosys: self.__gadgets += G.addSYSGadgets(section)
 
-        # Pass clean single instruction and unknown instructions
-        self.__gadgets = G.passClean(self.__gadgets, self.__options.multibr)
-
         # Delete duplicate gadgets
-        if not self.__options.all:
+        if not self.__options.all and not self.__options.noinstr:
             self.__gadgets = rgutils.deleteDuplicateGadgets(self.__gadgets)
 
         # Applicate some Options
         self.__gadgets = Options(self.__options, self.__binary, self.__gadgets).getGadgets()
 
         # Sorted alphabetically
-        self.__gadgets = rgutils.alphaSortgadgets(self.__gadgets)
+        if not self.__options.noinstr:
+            self.__gadgets = rgutils.alphaSortgadgets(self.__gadgets)
 
         return True
 
@@ -197,6 +196,7 @@ class Core(cmd.Cmd):
         print("Gadgets information\n============================================================")
         for gadget in self.__gadgets:
             vaddr = gadget["vaddr"]
+#<<<<<<< HEAD
             insts=  gadget["gadget"]
             bytes = gadget["bytes"]
             bytesStr = " // " + bytes.encode('hex') if self.__options.dump else ""
@@ -210,6 +210,13 @@ class Core(cmd.Cmd):
 
         if self.__checksBeforeManipulations() == False:
             return False
+#=======
+#            insts = gadget.get("gadget", "")
+#            bytesStr = " // " + binascii.hexlify(gadget["bytes"]).decode('utf8') if self.__options.dump else ""
+#
+#            print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) +
+#                  (" : %s" %(insts) if insts else "") + bytesStr)
+#>>>>>>> upstream/master
 
         if self.__options.silent:
             return True
@@ -276,6 +283,7 @@ class Core(cmd.Cmd):
 
 
     def __lookingForOpcodes(self, opcodes):
+        import binascii
 
         if self.__checksBeforeManipulations() == False:
             return False
@@ -289,7 +297,7 @@ class Core(cmd.Cmd):
         for section in execSections:
             section = self._sectionInRange(section)
             if not section: continue
-            allRef = [m.start() for m in re.finditer(re.escape(opcodes.decode("hex")), section["opcodes"])]
+            allRef = [m.start() for m in re.finditer(re.escape(binascii.unhexlify(opcodes)), section["opcodes"])]
             for ref in allRef:
                 vaddr  = self.__offset + section["vaddr"] + ref
                 print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : %s" %(opcodes))
@@ -297,7 +305,6 @@ class Core(cmd.Cmd):
 
 
     def __lookingForMemStr(self, memstr):
-
         if self.__checksBeforeManipulations() == False:
             return False
 
@@ -314,7 +321,7 @@ class Core(cmd.Cmd):
                 for section in sections:
                     section = self._sectionInRange(section)
                     if not section: continue
-                    allRef = [m.start() for m in re.finditer(char, section["opcodes"])]
+                    allRef = [m.start() for m in re.finditer(char.encode('utf-8'), section["opcodes"])]
                     for ref in allRef:
                         vaddr  = self.__offset + section["vaddr"] + ref
                         print(("0x%08x" %(vaddr) if arch == CS_MODE_32 else "0x%016x" %(vaddr)) + " : '%c'" %(char))
@@ -543,7 +550,7 @@ class Core(cmd.Cmd):
     def help_search(self):
         print("Syntax: search <keyword1 keyword2 keyword3...> -- Filter with or without keywords")
         print("keyword  = with")
-        print("!keyword = witout")
+        print("!keyword = without")
         return False
 
 
@@ -573,7 +580,7 @@ class Core(cmd.Cmd):
 
 
     def help_filter(self):
-        print("Syntax: filter <filter1|filter2|...> - Suppress specific instructions")
+        print("Syntax: filter <filter1|filter2|...> - Suppress specific mnemonics")
         return False
 
 
@@ -639,6 +646,7 @@ class Core(cmd.Cmd):
         print("Range:       %s" %(self.__options.range))
         print("RawArch:     %s" %(self.__options.rawArch))
         print("RawMode:     %s" %(self.__options.rawMode))
+        print("RawEndian:   %s" %(self.__options.rawEndian))
         print("Re:          %s" %(self.__options.re))
         print("String:      %s" %(self.__options.string))
         print("Thumb:       %s" %(self.__options.thumb))
