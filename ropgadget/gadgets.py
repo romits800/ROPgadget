@@ -50,6 +50,20 @@ class Gadgets(object):
             new += [gadget]
         return new
 
+    def __passCleanArm64(self, gadgets, multibr=False):
+        new = []
+        bl = ["brk", "smc", "hvc"]
+        for gadget in gadgets:
+            insts = gadget["gadget"].split(" ; ")
+            isbl = False;
+            for inst in insts:
+                if inst.split(" ")[0] in bl:
+                    isbl = True;
+            if isbl:
+                continue
+            new += [gadget]
+        return new
+
     def __gadgetsFinding(self, section, gadgets, arch, mode):
 
         C_OP    = 0
@@ -68,7 +82,7 @@ class Gadgets(object):
                         for decode in decodes:
                             gadget += (decode.mnemonic + " " + decode.op_str + " ; ").replace("  ", " ")
                         if re.search(gad[C_OP],decode.bytes) is None:
-                            continue
+                                continue
                         if len(gadget) > 0:
                             gadget = gadget[:-3]
                             off = self.__offset
@@ -238,7 +252,7 @@ class Gadgets(object):
         elif arch == CS_ARCH_PPC:    return gadgets
         elif arch == CS_ARCH_SPARC:  return gadgets
         elif arch == CS_ARCH_ARM:    return gadgets
-        elif arch == CS_ARCH_ARM64:  return gadgets
+        elif arch == CS_ARCH_ARM64:  return self.__passCleanArm64(gadgets, multibr)
         else:
             print("Gadgets().passClean() - Architecture not supported")
             return None
